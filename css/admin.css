@@ -1,0 +1,495 @@
+.admin {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  padding: 25px;
+  position: relative;
+}
+
+.admin_bar {
+  width: 125px;
+  position: absolute;
+  right: -110px;
+  top: 175px;
+  transition: 0.3s;
+  z-index: 10;
+}
+
+.admin_bar:hover {
+  right: -50px;
+}
+
+.admin_links {
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  flex-direction: column;
+  background: #ff5959;
+  padding: 5px;
+  border-radius: 15px;
+  gap: 3px;
+}
+
+.admin_links i {
+  width: fit-content;
+  padding: 15px;
+  font-size: 26px;
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+  transition: 0.3s;
+  border-radius: 15px;
+  color: white;
+}
+
+.admin_links i.active,
+.admin_links i:hover {
+  background: white;
+  color: #ff5959;
+}
+
+.search_bar {
+  width: 100%;
+  height: 50px;
+  position: relative;
+  z-index: 3;
+}
+
+.search_bar input {
+  width: 100%;
+  padding: 5px 20px;
+  border-radius: 10px;
+  height: 50px;
+  border: none;
+  font-weight: 300;
+  font-size: 16px;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: 0.1s;
+}
+
+.search_bar input:focus {
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.search_bar i {
+  width: 45px;
+  height: 45px;
+  position: absolute;
+  top: 25px;
+  right: 10px;
+  transform: translateY(-40%);
+  font-size: 24px;
+  padding: 5px 10px;
+  transition: 0.3s;
+  color: #ff928b;
+}
+
+.search_results {
+  width: 100%;
+  min-height: fit-content;
+  max-height: 537px;
+  position: absolute;
+  top: -10px;
+  background: transparent;
+  opacity: 0;
+  overflow: scroll;
+  padding: 0;
+  display: none;
+  position: relative;
+  z-index: 3;
+  background: white;
+}
+
+.search_results.active {
+  opacity: 1;
+  display: block;
+}
+
+.result_item {
+  width: 100%;
+  margin: 0;
+  list-style: none;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 10px 25px;
+  padding-bottom: 30px;
+  border-radius: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.result_item .product_name {
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.result_item .index,
+.result_item .sub_index {
+  position: absolute;
+  bottom: 5px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.result_item .index {
+  left: 25px;
+}
+
+.result_item i {
+  position: absolute;
+  right: 15px;
+  color: #ff5959;
+  transition: none;
+  z-index: 1;
+  top: 33px;
+}
+
+.result_item i:hover {
+  color: #ff928b;
+}
+
+/* editor */
+
+.editor {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  display: none;
+  padding: 10px;
+}
+
+.editor.active {
+  display: block;
+}
+
+/* product editor */
+
+.product_editor {
+  padding-bottom: 150px;
+  position: relative;
+}
+
+.product_editor_data {
+  height: 100%;
+  margin: 0;
+  position: relative;
+  top: 25px;
+  display: flex;
+  flex-direction: column;
+  padding: 2px;
+}
+
+.product_editor_data .bg_image {
+  width: 500px;
+  height: fit-content;
+  object-fit: contain;
+  object-position: center;
+  position: absolute;
+  inset: 50%;
+  transform: translate(-50%, -60%);
+}
+
+.product_editor_data .bg_image img {
+  width: 100%;
+  position: relative;
+  z-index: 0;
+}
+
+.product_editor_data .bg_image span {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: -10px;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.product_editor_data .product_title {
+  margin: 0;
+  color: #ff5959;
+}
+
+.product_editor_data label {
+  margin-bottom: 10px;
+}
+
+.product_editor_data select {
+  margin-bottom: 10px;
+  font-size: 16px;
+  outline: none;
+  cursor: pointer;
+}
+
+.product_editor_data .property_value {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  outline: none;
+  border-radius: 10px;
+  resize: none;
+  border: 1px solid black;
+  position: relative;
+  overflow: hidden;
+}
+
+.product_editor_data select.property_value {
+  height: 50px;
+}
+
+.product_editor_data .property_value img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: absolute;
+  inset: 0;
+  transform: scale(1.5);
+}
+
+.product_editor_data .property_value input,
+.product_editor_data .property_value span {
+  width: 85px;
+  height: 40px;
+  border-radius: 10px;
+  position: absolute;
+  inset: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.product_editor_data .property_value:hover input {
+  z-index: 2;
+}
+
+.product_editor_data .property_value span {
+  font-size: 20px;
+  padding: 5px 10px;
+}
+
+.product_editor_data .property_value:hover span {
+  background: #ff5959;
+  opacity: 1;
+  color: white;
+}
+
+.product_editor .send_data {
+  width: 100%;
+  height: 75px;
+  bottom: 0px;
+  position: absolute;
+  padding: 0 22px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.product_editor .send_data span {
+  width: fit-content;
+  height: fit-content;
+  background: #ff5959;
+  border-radius: 10px;
+  padding: 10px 50px;
+  color: white;
+  font-size: 20px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.product_editor .send_data span:hover {
+  background: #ff928b;
+}
+
+.product_editor .send_data .close_btn {
+  background: rgba(0, 0, 0, 0.4);
+  margin-right: 10px;
+}
+
+.product_editor .send_data .close_btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* slide editor */
+
+.slides_editor {
+  padding: 10px;
+  margin-bottom: 0;
+}
+
+.slides_editor .upload_slide {
+  width: 75px;
+  height: 75px;
+  overflow: hidden;
+  position: absolute;
+  inset: 50px;
+  z-index: 3;
+}
+
+.slides_editor i {
+  font-size: 40px;
+  background: #ff5959;
+  color: white;
+  border-radius: 50%;
+  padding: 15px 17px;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.upload_slide:hover i {
+  background: #ff928b;
+}
+
+.slides_editor input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.slides_editor .slides_container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: start;
+  gap: 7px;
+}
+
+.slides_editor .image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+}
+
+.slides_editor .image.inactive {
+  width: 75px;
+}
+
+.slides_editor .image img {
+  width: 100%;
+  height: 100%;
+  transition: 0.3s;
+  object-fit: cover;
+  scale: 1;
+}
+
+.slides_editor .image.image.inactive:hover img {
+  scale: 1.01;
+}
+
+.slides_editor .fa-minus {
+  position: absolute;
+  transition: 0.3s;
+  right: 25px;
+  top: 25px;
+}
+
+.slides_editor .fa-minus:hover {
+  background: #ff928b;
+}
+
+.slides_editor .image.image.inactive .fa-minus {
+  display: none;
+}
+
+.slides_editor .image .fa-minus {
+  display: block;
+}
+
+/* gallery editor */
+
+.gallery_editor {
+  padding: 30px;
+  padding-top: 125px;
+}
+
+.gallery_editor .upload_gimage {
+  width: 75px;
+  height: 75px;
+  overflow: hidden;
+  position: absolute;
+  inset: 50px;
+  z-index: 3;
+}
+
+.gallery_editor i {
+  font-size: 40px;
+  background: #ff5959;
+  color: white;
+  border-radius: 50%;
+  padding: 15px 17px;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.upload_gimage:hover i {
+  background: #ff928b;
+}
+
+.gallery_editor input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.gallery_editor .gallery_container {
+  height: 100%;
+  overflow: scroll;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0;
+  padding-bottom: 25px;
+}
+
+.gallery_editor .image {
+  width: 49%;
+  height: 250px;
+  overflow: hidden;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.gallery_editor img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.gallery_editor .fa-square-minus {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 0px 2px;
+  color: #ff5959;
+  background: radial-gradient(
+    white,
+    white 50%,
+    transparent 50%,
+    transparent 100%
+  );
+  opacity: 0;
+}
+
+.gallery_editor .image:hover .fa-square-minus {
+  opacity: 1;
+}
+
+.gallery_editor .fa-square-minus:hover {
+  color: #ff928b;
+}

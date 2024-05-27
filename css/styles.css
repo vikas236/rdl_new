@@ -1,0 +1,38 @@
+@import "./admin.css";
+@import "./home.css";
+@import "./nav.css";
+@import "./footer.css";
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 1000px;
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+.teee:before,
+.teee:after {
+  content: "T";
+  color: #ff5959;
+  position: absolute;
+  font-weight: 300;
+  top: -7px;
+  font-size: 44px;
+}
+
+.teee:before {
+  left: -50px;
+  transform: rotate(90deg);
+}
+
+.teee::after {
+  top: -5px;
+  right: -50px;
+  transform: rotate(-90deg);
+}
