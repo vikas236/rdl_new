@@ -1,6 +1,6 @@
 import essen from "./essentials.js";
 import homeW from "./home.js";
-// import aqua from "./aqua.js";
+import productsW from "./products.js";
 // import galleryw from "./gallery.js";
 import adminW from "./admin.js";
 
@@ -21,15 +21,16 @@ function loadPage(path) {
       container.innerHTML = request.responseText;
       navLinks(path);
       if (path == "home") homeW();
-      // if (path == "aqua") aqua();
-      // if (path == "gallery") galleryw();
+      if (path == "products") productsW();
       if (path == "admin") adminW();
-      // else {
-      //   const nav = document.querySelector("nav");
-      //   const footer = document.querySelector("footer");
-      //   nav.style.display = "flex";
-      //   footer.style.display = "flex";
-      // }
+      else {
+        const nav = document.querySelector("nav");
+        const footer = document.querySelector("footer");
+        const queries = document.querySelector(".queries");
+        nav.style.display = "flex";
+        footer.style.display = "flex";
+        queries.style.display = "flex";
+      }
     } else {
       container.innerHTML = "Page not found";
     }

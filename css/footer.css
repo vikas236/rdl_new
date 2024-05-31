@@ -9,7 +9,17 @@ footer {
   position: relative;
 }
 
-footer > div {
+footer .footer_wrapper {
+  width: 1350px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-direction: row;
+}
+
+.footer_wrapper > div {
   width: 425px;
   height: 100%;
   display: flex;
@@ -17,7 +27,7 @@ footer > div {
   padding: 75px 25px;
 }
 
-footer > div:first-of-type {
+.footer_wrapper > div:first-of-type {
   margin-right: 100px;
 }
 

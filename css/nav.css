@@ -2,10 +2,10 @@ nav {
   width: 100vw;
   height: 100px;
   overflow: hidden;
-  padding: 5px 300px;
+  padding: 5px 50px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   position: absolute;
   top: 0;
   background: white;
@@ -14,12 +14,22 @@ nav {
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 }
 
+nav .nav_wrapper {
+  width: 1350px;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 nav img {
   height: 100%;
   transform: scale(1.1);
 }
 
 nav .nav_links {
+  width: fit-content;
   height: 100%;
   display: flex;
 }

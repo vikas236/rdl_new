@@ -4,50 +4,57 @@ import essen from "./essentials.js";
 const clickEvent = essen.createClickEvent();
 
 async function adminW() {
-  adminLinks.linksActivity();
+  const nav = document.querySelector("nav");
+  const footer = document.querySelector("footer");
+  const queries = document.querySelector(".queries");
+  nav.style.display = "none";
+  footer.style.display = "none";
+  queries.style.display = "none";
+  productEditor.searchW.searchInput();
+  // adminLinks.linksActivity();
 }
 
-const adminLinks = (() => {
-  let links;
-  let editors;
+// const adminLinks = (() => {
+//   let links;
+//   let editors;
 
-  function linksActivity() {
-    links = document.querySelectorAll(".admin_links i");
-    editors = document.querySelectorAll(".admin .editor");
+//   function linksActivity() {
+//     links = document.querySelectorAll(".admin_links i");
+//     editors = document.querySelectorAll(".admin .editor");
 
-    setTimeout(() => {
-      links[0].dispatchEvent(clickEvent);
-    }, 1);
+//     setTimeout(() => {
+//       links[0].dispatchEvent(clickEvent);
+//     }, 1);
 
-    links.forEach((e, i) => {
-      e.addEventListener("click", () => {
-        linksColor(e);
-        showEditor(i);
-        runJs(i);
-      });
-    });
-  }
+//     links.forEach((e, i) => {
+//       e.addEventListener("click", () => {
+//         linksColor(e);
+//         showEditor(i);
+//         runJs(i);
+//       });
+//     });
+//   }
 
-  function linksColor(e) {
-    links.forEach((l) => l.classList.remove("active"));
-    e.classList.add("active");
-  }
+//   function linksColor(e) {
+//     links.forEach((l) => l.classList.remove("active"));
+//     e.classList.add("active");
+//   }
 
-  function showEditor(i) {
-    editors.forEach((e) => e.classList.remove("active"));
-    editors[i].classList.add("active");
-  }
+//   function showEditor(i) {
+//     editors.forEach((e) => e.classList.remove("active"));
+//     editors[i].classList.add("active");
+//   }
 
-  function runJs(i) {
-    if (i == 0) productEditor.searchW.searchInput();
-    else if (i == 1) slideEditor.showSlides();
-    else if (i == 2) galleryEditor.showGallery();
-  }
+//   function runJs(i) {
+//     if (i == 0) productEditor.searchW.searchInput();
+//     else if (i == 1) slideEditor.showSlides();
+//     else if (i == 2) galleryEditor.showGallery();
+//   }
 
-  return {
-    linksActivity,
-  };
-})();
+//   return {
+//     linksActivity,
+//   };
+// })();
 
 const productEditor = (() => {
   let data_container;
@@ -395,109 +402,6 @@ const productEditor = (() => {
   })();
 
   return { searchW };
-})();
-
-const slideEditor = (() => {
-  async function showSlides() {
-    // await serverW.truncateTable("slides").then((data) => console.log(data));
-    await serverW.getTable("slides").then((data) => {
-      const container = document.querySelector(
-        ".slides_editor .slides_container"
-      );
-      container.innerHTML = "";
-      data.forEach((e) => addImage(e.image));
-    });
-    const input = document.querySelector(".upload_slide input");
-
-    input.addEventListener("input", async () => {
-      const base64String = await imageToBase64(input.files[0]);
-      addImage(base64String);
-      serverW.uploadImage("slides", base64String);
-    });
-  }
-
-  function addImage(url) {
-    const container = document.querySelector(
-      ".slides_editor .slides_container"
-    );
-
-    const image = document.createElement("div");
-    image.className = "image inactive";
-    image.innerHTML = `<img src="data:image/jpeg;base64,${url}"><i class="fa-solid fa-minus"></i>`;
-    container.appendChild(image);
-    removeImage(image);
-
-    image.addEventListener("click", () => {
-      const images = document.querySelectorAll(".slides_editor .image");
-      images.forEach((e) => e.classList.add("inactive"));
-      image.classList.remove("inactive");
-    });
-    adjustSlides();
-  }
-
-  function adjustSlides() {
-    const slides = document.querySelectorAll(".slides_container .image");
-    let slide_active = false;
-
-    slides.forEach((e) => {
-      if (!e.classList.contains("inactive")) slide_active = true;
-    });
-
-    if (!slide_active) slides[0].classList.remove("inactive");
-  }
-
-  function removeImage(image) {
-    const img = image.childNodes[0];
-    const removebtn = image.childNodes[1];
-
-    removebtn.addEventListener("click", () => showConfirmation(image));
-  }
-
-  function showConfirmation(image) {
-    const modal = document.querySelector(".confirmation_modal");
-
-    let src = image.childNodes[0].src;
-    src = src.replace("data:image/jpeg;base64,", "");
-  }
-
-  return { showSlides };
-})();
-
-const galleryEditor = (() => {
-  let container;
-  let input;
-
-  async function showGallery() {
-    container = document.querySelector(".gallery_editor .gallery_container");
-    input = document.querySelector(".upload_gimage").childNodes[3];
-
-    await serverW.getTable("gallery").then((result) => {
-      result.forEach((e) => addGImage(e.image));
-    });
-
-    input.addEventListener("input", async () => {
-      const url = await imageToBase64(input.files[0]);
-      await serverW.uploadImage("gallery", url).then(() => addGImage(url));
-    });
-  }
-
-  function addGImage(url) {
-    const image = document.createElement("div");
-    image.classList.add("image");
-    image.innerHTML = `<img src="data:image/jpeg;base64,${url}"><i class="fa-solid fa-square-minus"></i>`;
-    container.appendChild(image);
-    removeGImage(image);
-  }
-
-  function removeGImage(image) {
-    const removebtn = image.childNodes[1];
-
-    removebtn.addEventListener("click", () => {
-      console.log("rmove image");
-    });
-  }
-
-  return { showGallery };
 })();
 
 function imageToBase64(file) {

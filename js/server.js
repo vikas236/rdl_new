@@ -126,10 +126,11 @@ const serverW = (() => {
       });
   }
 
-  function getProductData(table_name, product_name) {
+  function getProductData(table_name, product_name, category) {
     const requestData = {
       tableName: table_name,
       productName: product_name,
+      category: category,
     };
 
     return fetch("http://localhost:3000/get_product_data", {
