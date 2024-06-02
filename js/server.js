@@ -1,10 +1,13 @@
+const server_url = "https://rdl-server-new.vercel.app";
+const dev_url = "http://localhost:3000";
+
 const serverW = (() => {
   function getTable(table_name) {
     const requestData = {
       tableName: table_name,
     };
 
-    return fetch("http://localhost:3000/get_table", {
+    return fetch(`${server_url}/get_table`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,7 +31,7 @@ const serverW = (() => {
       tableName: table_name,
     };
 
-    return fetch("http://localhost:3000/clear_table", {
+    return fetch(`${server_url}/clear_table`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +57,7 @@ const serverW = (() => {
     };
     if (condition) requestData.name = condition;
 
-    return fetch("http://localhost:3000/get_column", {
+    return fetch(`${server_url}/get_column`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -81,7 +84,7 @@ const serverW = (() => {
       category: category,
     };
 
-    return fetch("http://localhost:3000/get_property", {
+    return fetch(`${server_url}/get_property`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -107,7 +110,7 @@ const serverW = (() => {
       productName: product_name,
     };
 
-    return fetch("http://localhost:3000/get_category", {
+    return fetch(`${server_url}/get_category`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -133,7 +136,7 @@ const serverW = (() => {
       category: category,
     };
 
-    return fetch("http://localhost:3000/get_product_data", {
+    return fetch(`${server_url}/get_product_data`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -157,7 +160,7 @@ const serverW = (() => {
       tableName: table_name,
     };
 
-    return fetch("http://localhost:3000/get_column_names", {
+    return fetch(`${server_url}/get_column_names`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -182,7 +185,7 @@ const serverW = (() => {
       imageUrl: url,
     };
 
-    return fetch("http://localhost:3000/upload_image", {
+    return fetch(`${server_url}/upload_image`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -206,7 +209,7 @@ const serverW = (() => {
       tableName: table_name,
     };
 
-    return fetch("http://localhost:3000/get_categories", {
+    return fetch(`${server_url}/get_categories`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -233,7 +236,7 @@ const serverW = (() => {
       newValue: new_value,
     };
 
-    return fetch("http://localhost:3000/update_property", {
+    return fetch(`${server_url}/update_property`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
