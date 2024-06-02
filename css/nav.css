@@ -9,7 +9,7 @@ nav {
   position: absolute;
   top: 0;
   background: white;
-  z-index: 2;
+  z-index: 6;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 }
@@ -76,4 +76,122 @@ nav span.nav_link {
 
 nav span.nav_link:hover {
   color: #993535;
+}
+
+.ham {
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  border-radius: 50%;
+  position: absolute;
+  right: 50px;
+  display: none;
+  z-index: 7;
+}
+
+.ham .bar,
+.ham .bar::after {
+  content: "";
+  height: 5px;
+  border-radius: 5px;
+  background: #ff5959;
+  transition: 0.5s;
+}
+
+.ham .bar {
+  width: 60%;
+  position: absolute;
+  inset: 50%;
+  top: 25px;
+  transform: translate(-50%, -50%);
+}
+
+.ham .bar::after {
+  width: 100%;
+  position: absolute;
+  top: 10px;
+  left: 0;
+}
+
+.ham:hover .bar {
+  transform: translate(-50%, -50%) rotate(10deg);
+}
+
+.ham.active .bar {
+  transform: translate(-50%, -50%) rotate(225deg);
+}
+
+.ham.active .bar::after {
+  transform: rotate(-90deg);
+  top: 0;
+}
+
+@media only screen and (max-width: 886px) {
+  nav {
+    overflow: hidden;
+  }
+
+  .ham {
+    display: block;
+  }
+
+  nav .nav_links {
+    display: none;
+  }
+
+  .side_bar {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    inset: 0;
+    z-index: 6;
+  }
+
+  nav .side_bar .sidebar_wrapper {
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column !important;
+    top: 50%;
+    left: -350px;
+    transform: translateY(-50%);
+    background: white;
+    z-index: 6;
+    padding: 5px 0;
+    padding-left: 35px;
+    padding-bottom: 25px;
+    border-radius: 25px;
+    transition: 0.5s;
+  }
+
+  nav .slidebar.active {
+    background: rgba(0, 0, 0, 0.01);
+  }
+
+  nav .slidebar.active .sidebar_wrapper {
+    left: 25px;
+  }
+
+  nav .side_bar .nav_link {
+    height: 50px !important;
+    width: 150px !important;
+    border-radius: 10px;
+  }
+
+  nav .side_bar .nav_link:last-child {
+    width: 135px !important;
+    height: 40px !important;
+    padding-top: 7px;
+  }
+
+  nav .nav_link.active::before {
+    width: 5px;
+    height: 18px;
+    border-radius: 10px;
+    background: #ff5959;
+    top: 33px;
+    left: 0px;
+  }
 }

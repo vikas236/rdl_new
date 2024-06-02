@@ -236,6 +236,7 @@
 /* macnihery */
 
 .machinery {
+  width: 100%;
   height: 500px;
   display: flex;
   justify-content: center;
@@ -359,6 +360,7 @@
   padding: 0 400px;
   padding-top: 250px;
   position: relative;
+  overflow: hidden;
 }
 
 .characteristics .title {
@@ -371,7 +373,7 @@
 }
 
 .characteristics h1 {
-  width: fit-content;
+  width: 100%;
   margin: 10px 0;
   position: relative;
   margin: 10px auto;
@@ -545,6 +547,7 @@
   padding-top: 100px;
   text-align: center;
   flex-direction: column;
+  display: none;
 }
 
 .work_route span {
@@ -664,6 +667,7 @@
 }
 
 .queries p {
+  width: 100%;
   margin: 0;
   margin-top: 10px;
 }
@@ -697,4 +701,523 @@
   padding-left: 19px;
   font-size: 20px;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 1400px) {
+  .home .intro .content {
+    width: 100%;
+    padding: 0 50px;
+  }
+
+  .home .intro h1 {
+    font-size: 64px;
+    width: 75%;
+    position: relative;
+    z-index: 2;
+  }
+
+  .home .intro .scientist {
+    width: 600px;
+    right: 50px;
+  }
+
+  .home .intro p {
+    width: 50%;
+    opacity: 0.9;
+    line-height: 23px;
+  }
+
+  .home .intro .experience {
+    width: 200px;
+    height: 135px;
+    right: 0px;
+    bottom: 200px;
+    padding-top: 20px;
+    font-size: 14px;
+  }
+
+  .home .intro .experience span {
+    display: block;
+    font-size: 52px;
+    font-weight: 700;
+    margin-bottom: -15px;
+  }
+
+  .identify {
+    padding: 0 50px;
+    padding-top: 50px;
+    margin-bottom: -50px;
+  }
+
+  .identify img {
+    width: 375px;
+  }
+
+  .machinery {
+    padding: 0 50px;
+  }
+
+  .machinery img {
+    transform: scale(0.6);
+    padding-left: 165px;
+    position: relative;
+    top: -75px;
+  }
+
+  .need {
+    width: 100%;
+    height: 500px !important;
+    padding: 0 50px;
+  }
+
+  .need .image {
+    width: 400px;
+    height: 300px;
+    padding: 50px;
+    left: 0px;
+  }
+
+  .need .content {
+    width: fit-content;
+    overflow: hidden;
+  }
+
+  .need h2 {
+    width: 85%;
+    font-size: 36px;
+    color: #ff5959;
+    z-index: 3;
+    top: -25px;
+  }
+
+  .need p {
+    width: 75%;
+    height: fit-content;
+  }
+
+  .characteristics {
+    height: fit-content;
+    padding: 0 50px;
+    padding-top: 250px;
+    justify-content: center;
+    gap: 25px;
+  }
+
+  .characteristics .character {
+    margin-top: 75px;
+  }
+
+  .characteristics .title {
+    width: 100vw;
+    padding: 0;
+    top: 100px;
+  }
+
+  .characteristics h1 {
+    width: 100vw;
+  }
+
+  .characteristics span {
+    width: 100%;
+    padding: 0 250px;
+    display: block;
+  }
+
+  .precautious {
+    width: 100vw;
+    height: fit-content;
+    margin-top: 100px;
+    padding: 0 50px;
+  }
+
+  .precautious_wrapper {
+    height: fit-content;
+    padding: 25px 50px;
+  }
+
+  .precautious h2 {
+    font-size: 32px;
+  }
+
+  .precautious img {
+    height: 250px;
+  }
+
+  .queries {
+    width: 100%;
+    flex-direction: column;
+    height: 350px;
+    justify-content: space-around;
+    align-items: center;
+    padding: 35px 50px;
+    overflow: hidden;
+  }
+
+  .queries .content {
+    width: 100%;
+  }
+
+  .queries .mail_input {
+    width: 100%;
+    padding: 0;
+  }
+
+  .queries input {
+    width: 100%;
+  }
+
+  .queries i {
+    right: 0;
+  }
+}
+
+@media only screen and (max-width: 883px) {
+  .home .intro {
+    height: 550px;
+  }
+
+  .home .intro h1 {
+    font-size: 44px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    line-height: 65px;
+    margin-bottom: 10px;
+  }
+
+  .home .intro .content {
+    height: 250px;
+    margin-top: 100px;
+  }
+
+  .home .intro span.subtext {
+    font-size: 16px;
+  }
+
+  .home .intro .scientist {
+    width: 400px;
+    right: 0px;
+    bottom: -250px;
+  }
+
+  .home .intro p {
+    width: 50%;
+    opacity: 0.9;
+    line-height: 23px;
+    margin: 0;
+    display: none;
+  }
+
+  .home .intro button {
+    width: 175px;
+    font-size: 16px;
+    padding: 12px 0px;
+    z-index: 2;
+  }
+
+  .home .intro .experience {
+    width: 150px;
+    height: 100px;
+    right: 0px;
+    bottom: 100px;
+    padding-top: 20px;
+    font-size: 12px;
+  }
+
+  .home .intro .experience span {
+    font-size: 44px;
+  }
+
+  /* contact info */
+
+  .home .contact_info {
+    width: 100vw;
+    height: 250px;
+    display: flex;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .home .contact_info > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center !important;
+    padding: 15px;
+  }
+
+  .home .contact_info h1 {
+    font-size: 24px !important;
+    margin: 7px 0;
+  }
+
+  .home .contact_info .right {
+    align-items: center;
+    padding: 0;
+    color: #002f47;
+    padding-left: 15px;
+    padding-top: 25px;
+  }
+
+  .home .contact_info span {
+    font-size: 12px;
+  }
+
+  .home .contact_info .right h1 {
+    margin: 0;
+  }
+
+  .identify {
+    padding: 0 50px;
+    padding-top: 50px;
+    margin-bottom: -50px;
+    flex-direction: column;
+  }
+
+  .identify h2 {
+    font-size: 32px;
+  }
+
+  .identify img {
+    width: 275px;
+  }
+
+  .identify .content {
+    height: fit-content;
+    width: 100% !important;
+    padding: 0;
+    padding-top: 50px;
+  }
+
+  .machinery {
+    width: 100% !important;
+    padding: 50px 50px;
+    height: fit-content;
+    flex-direction: column;
+  }
+
+  .machinery .content {
+    width: 100% !important;
+  }
+
+  .machinery img {
+    padding-left: 165px;
+    position: relative;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.6);
+  }
+
+  .machinery .image {
+    height: fit-content;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: -250px;
+  }
+
+  .machinery p {
+    width: 100%;
+  }
+
+  .need {
+    width: 100%;
+    height: fit-content !important;
+    padding: 0 50px;
+    flex-direction: column;
+  }
+
+  .need .image {
+    width: 200px;
+    height: 200px;
+    padding: 50px;
+    left: 0px;
+    margin-bottom: 50px;
+  }
+
+  .need img {
+    width: 100%;
+  }
+
+  .need .content {
+    width: 100%;
+    height: fit-content;
+    overflow: hidden;
+    padding: 0 !important;
+  }
+
+  .need h2 {
+    width: 85%;
+    font-size: 24px;
+    color: #ff5959;
+    z-index: 3;
+    top: 25px;
+    left: 0;
+    color: white;
+  }
+
+  .need span.subtext {
+    width: 100% !important;
+    text-align: left;
+    left: 0;
+  }
+
+  .need p {
+    width: 100% !important;
+    height: fit-content;
+    left: 0;
+    font-size: 14px;
+    margin-bottom: 25px;
+  }
+
+  .characteristics {
+    height: fit-content;
+    padding: 0 50px;
+    padding-top: 250px;
+  }
+
+  .characteristics .character {
+    margin-top: 75px;
+  }
+
+  .characteristics .character:nth-of-type(5),
+  .characteristics .character:nth-of-type(6),
+  .characteristics .character:nth-of-type(7) {
+    display: none;
+  }
+
+  .characteristics .title {
+    width: 100vw;
+    padding: 0;
+    top: 100px;
+  }
+
+  .characteristics h1 {
+    width: 100vw;
+    margin: 15px 0;
+  }
+
+  .characteristics span {
+    width: 100%;
+    padding: 0 50px;
+    display: block;
+  }
+
+  .precautious {
+    width: 100vw;
+    height: fit-content;
+    margin-top: 50px;
+    padding: 0 50px;
+  }
+
+  .precautious .content {
+    width: 100%;
+  }
+
+  .precautious_wrapper {
+    width: 100%;
+    height: fit-content;
+    padding: 25px 50px;
+    flex-direction: column;
+  }
+
+  .precautious h2 {
+    width: 100%;
+    font-size: 24px;
+    line-height: 35px;
+  }
+
+  .precautious p {
+    font-size: 15px;
+  }
+
+  .precautious img {
+    width: 100%;
+    height: 250px;
+  }
+
+  .queries {
+    width: 100%;
+    flex-direction: column;
+    height: 350px;
+    justify-content: space-around;
+    align-items: center;
+    padding: 35px 50px;
+    overflow: hidden;
+  }
+
+  .queries .content {
+    width: 100%;
+  }
+
+  .queries .mail_input {
+    width: 100%;
+    padding: 0;
+  }
+
+  .queries input {
+    width: 100%;
+  }
+
+  .queries i {
+    right: 0;
+  }
+
+  .queries {
+    width: 100%;
+    height: fit-content;
+    padding: 35px 25px;
+  }
+
+  .queries .content {
+    margin-bottom: 35px;
+  }
+
+  .queries h2 {
+    font-size: 32px;
+    height: fit-content;
+  }
+
+  .queries p {
+    width: 100%;
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .home .intro .scientist {
+    width: 350px;
+  }
+
+  .home .intro button {
+    width: 125px;
+    font-size: 14px;
+    padding: 10px 0;
+  }
+
+  .home .intro .experience {
+    width: 140px;
+    height: 85px;
+    padding-top: 10px;
+    font-size: 12px !important;
+    right: 25px;
+  }
+
+  .home .intro .experience span {
+    font-size: 32px;
+    margin-bottom: -5px;
+  }
+
+  .home .contact_info .right {
+    height: fit-content !important;
+    background: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding-bottom: 25px;
+  }
+
+  .identify {
+    margin-top: 50px;
+  }
 }
