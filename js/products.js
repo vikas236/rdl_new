@@ -38,7 +38,7 @@ async function productW() {
       adjustPreview(preview, e);
       if (e.target.classList.contains("product")) {
         if (e.target.innerHTML == essen.capitalize(arr[0])) {
-          if (!body.offsetWidth > 1360) preview.classList.add("active");
+          if (body.offsetWidth > 1360) preview.classList.add("active");
           adjustPreview(preview, e);
           await showPreview(preview, arr, e);
         }

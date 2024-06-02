@@ -121,7 +121,11 @@
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   overflow: hidden;
   padding: 25px;
-  display: block;
+  display: none;
+}
+
+.product_preview.active {
+  display: block !important;
 }
 
 .product_preview img {
