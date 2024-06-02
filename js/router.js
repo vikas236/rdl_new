@@ -41,9 +41,12 @@ function loadPage(path) {
 function navLinks(path) {
   const links = document.querySelectorAll(".nav_link");
 
+  links.forEach((e) => {
+    e.classList.remove("active");
+  });
+
   links.forEach((e, i) => {
     if (i != 3 && essen.deCapitalize(e.innerHTML) == path) {
-      links.forEach((e) => e.classList.remove("active"));
       e.classList.add("active");
     }
   });
