@@ -118,13 +118,9 @@
   position: fixed;
   z-index: 3;
   border-radius: 5px;
-  display: none;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   overflow: hidden;
   padding: 25px;
-}
-
-.product_preview.active {
   display: block;
 }
 
@@ -219,6 +215,10 @@
     height: 40px;
     padding-top: 5px;
     margin: 0;
+  }
+
+  .product_preview {
+    display: none;
   }
 }
 

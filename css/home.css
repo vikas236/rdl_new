@@ -52,6 +52,7 @@
   color: #002f47;
   line-height: 85px;
   margin: 20px 0;
+  position: relative;
 }
 
 .home .intro span {

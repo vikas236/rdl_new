@@ -11,50 +11,22 @@ async function adminW() {
   footer.style.display = "none";
   queries.style.display = "none";
   productEditor.searchW.searchInput();
-  // adminLinks.linksActivity();
+  adminLogin();
 }
 
-// const adminLinks = (() => {
-//   let links;
-//   let editors;
+function adminLogin() {
+  const login = document.querySelector(".admin_login");
+  const username = document.querySelector(".admin_login .username");
+  const password = document.querySelector(".admin_login .password");
+  const button = document.querySelector(".admin_login button");
 
-//   function linksActivity() {
-//     links = document.querySelectorAll(".admin_links i");
-//     editors = document.querySelectorAll(".admin .editor");
-
-//     setTimeout(() => {
-//       links[0].dispatchEvent(clickEvent);
-//     }, 1);
-
-//     links.forEach((e, i) => {
-//       e.addEventListener("click", () => {
-//         linksColor(e);
-//         showEditor(i);
-//         runJs(i);
-//       });
-//     });
-//   }
-
-//   function linksColor(e) {
-//     links.forEach((l) => l.classList.remove("active"));
-//     e.classList.add("active");
-//   }
-
-//   function showEditor(i) {
-//     editors.forEach((e) => e.classList.remove("active"));
-//     editors[i].classList.add("active");
-//   }
-
-//   function runJs(i) {
-//     if (i == 0) productEditor.searchW.searchInput();
-//     else if (i == 1) slideEditor.showSlides();
-//     else if (i == 2) galleryEditor.showGallery();
-//   }
-
-//   return {
-//     linksActivity,
-//   };
-// })();
+  button.addEventListener("click", () => {
+    if ((username.value == "admin", password.value == "pass62")) {
+      essen.popupMessage("login successfull");
+      login.style.display = "none";
+    } else essen.popupMessage("login unsuccessfull");
+  });
+}
 
 const productEditor = (() => {
   let data_container;
@@ -373,28 +345,38 @@ const productEditor = (() => {
     }
 
     function updateProperty(save_btn) {
-      save_btn.addEventListener("click", () => {
-        const property_name = document.querySelector(
-          ".product_editor_data select"
-        ).value;
-        let property_value = document.querySelector(
-          ".product_editor .property_value"
-        );
-        let value;
+      save_btn.addEventListener("click", (e) => {
+        if (save_btn.classList.contains("inactive")) {
+          essen.popupMessage("please wait...");
+        } else {
+          save_btn.classList.add("inactive");
+          const property_name = document.querySelector(
+            ".product_editor_data select"
+          ).value;
+          let property_value = document.querySelector(
+            ".product_editor .property_value"
+          );
+          let value;
 
-        if (property_name == "Name" || property_name == "Category")
-          value = essen.deCapitalize(property_value.value);
-        else if (property_name == "Image") {
-          value = property_value.childNodes[0].src;
-          if (value.length < 50) value = "";
-        } else value = property_value.value;
+          if (property_name == "Name" || property_name == "Category")
+            value = essen.deCapitalize(property_value.value);
+          else if (property_name == "Image") {
+            value = property_value.childNodes[0].src;
+            if (value.length < 50) value = "";
+          } else value = property_value.value;
 
-        serverW.updateProperty(
-          essen.deCapitalize(index),
-          essen.deCapitalize(product_name),
-          essen.deCapitalize(property_name),
-          value
-        );
+          serverW
+            .updateProperty(
+              essen.deCapitalize(index),
+              essen.deCapitalize(product_name),
+              essen.deCapitalize(property_name),
+              value
+            )
+            .then(async (data) => {
+              save_btn.classList.remove("inactive");
+              essen.popupMessage("update successful");
+            });
+        }
       });
     }
 

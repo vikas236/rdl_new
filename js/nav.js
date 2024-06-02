@@ -11,7 +11,7 @@ function navW() {
       wall.classList.add("active");
       side_bar.style.left = "25px";
       body.style.height = "100vh";
-      body.style.overflow = "hidden !important";
+      body.style.overflow = "hidden";
     } else {
       wall.classList.remove("active");
       side_bar.style.left = "-350px";
@@ -26,6 +26,8 @@ function navW() {
       body.style.height = "fit-content";
       ham.classList.remove("active");
     });
+
+    console.log(wall);
   });
 }
 navW();

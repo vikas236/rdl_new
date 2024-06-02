@@ -147,9 +147,12 @@ nav span.nav_link:hover {
     width: 100vw;
     height: 100vh;
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: -100vw;
     z-index: 7;
     display: block;
+    background: transparent;
+    transition: 0.5s;
   }
 
   nav .side_bar .sidebar_wrapper {
@@ -163,7 +166,7 @@ nav span.nav_link:hover {
     left: -350px;
     transform: translateY(-50%);
     background: white;
-    z-index: 7;
+    z-index: 8;
     padding: 5px 0;
     padding-left: 35px;
     padding-bottom: 25px;
@@ -171,8 +174,9 @@ nav span.nav_link:hover {
     transition: 0.5s;
   }
 
-  nav .slidebar.active {
+  nav .side_bar.active {
     background: rgba(0, 0, 0, 0.01);
+    left: 0;
   }
 
   nav .slidebar.active .sidebar_wrapper {
