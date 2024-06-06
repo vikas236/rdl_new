@@ -1054,7 +1054,7 @@
   .need {
     width: 100%;
     height: fit-content !important;
-    padding: 35px;
+    padding: 50px;
     padding-bottom: 65px;
     flex-direction: column;
   }
