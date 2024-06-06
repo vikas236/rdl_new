@@ -1,189 +1,245 @@
 import serverW from "./server.js";
 import essen from "./essentials.js";
 
-async function productW() {
-  const body = document.querySelector("body");
-  const products_names = [];
+function productW() {
+  const searchW = (() => {
+    function searchInput() {
+      const input = document.querySelector(".products .search input");
+      input.focus();
+      searchActivity(input);
 
-  async function getPorudctNames(table_name) {
-    await serverW.getColumn(table_name, ["name", "category"]).then((data) => {
-      //   console.log(data[0]);
-      data.forEach((e) =>
-        products_names.push([e.name, e.category, table_name])
-      );
-    });
-  }
+      input.addEventListener("input", async () => {
+        const term = input.value.trim().toLowerCase();
+        let prawn_filtered,
+          poultry_filtered = [];
 
-  await getPorudctNames("prawn_products");
-  await getPorudctNames("poultry_products");
+        await getProductsData("prawn_products").then(
+          async (data) =>
+            (prawn_filtered = await sortData("prawn_products", term, data))
+        );
+        await getProductsData("poultry_products").then(
+          (data) =>
+            (poultry_filtered = sortData("poultry_products", term, data))
+        );
 
-  function addProductsNames() {
-    const container = document.querySelector(".products_grid");
-
-    products_names.forEach(async (e) => {
-      const product = document.createElement("h3");
-      product.classList.add("product");
-      product.innerHTML = essen.capitalize(e[0]);
-      container.appendChild(product);
-      productActivity(e, product);
-    });
-  }
-
-  addProductsNames();
-
-  function productActivity(arr, name) {
-    const preview = document.querySelector(".product_preview");
-
-    document.addEventListener("mousemove", async (e) => {
-      adjustPreview(preview, e);
-      if (e.target.classList.contains("product")) {
-        if (e.target.innerHTML == essen.capitalize(arr[0])) {
-          if (body.offsetWidth > 1360) preview.classList.add("active");
-          adjustPreview(preview, e);
-          await showPreview(preview, arr, e);
-        }
-      } else {
-        preview.classList.remove("active");
-      }
-    });
-
-    name.addEventListener("click", () => {
-      if (arr[0] == essen.deCapitalize(name.innerHTML))
-        serverW.getProductData(arr[2], arr[0], arr[1]).then((data) => {
-          productDataW.showProduct(arr, data);
-        });
-    });
-  }
-
-  function adjustPreview(preview, e) {
-    if (e.clientX < screen.width - preview.offsetWidth - 100)
-      preview.style.left = e.clientX + 10 + "px";
-    else preview.style.left = e.clientX - preview.offsetWidth + "px";
-    if (e.clientY < screen.height - preview.offsetHeight - 100)
-      preview.style.top = e.clientY + 10 + "px";
-    else preview.style.top = e.clientY - preview.offsetHeight + "px";
-  }
-
-  async function showPreview(container, arr, e) {
-    const name = e.target.innerHTML;
-    const condition =
-      container.childElementCount > 0 &&
-      container.childNodes[3].innerHTML == name;
-
-    if (!condition) {
-      container.innerHTML = "";
-      await serverW.getProductData(arr[2], arr[0], arr[1]).then((data) => {
-        previewContent(container, data, arr);
+        addResults([prawn_filtered, poultry_filtered]);
       });
     }
-  }
 
-  function previewContent(container, data, arr) {
-    container.innerHTML = "";
-    const img = document.createElement("img");
-    const name = document.createElement("h3");
-    const category = document.createElement("span");
-    const hr = document.createElement("hr");
-
-    if (data.image == null || data.image.length < 50) {
-      img.style.display = "none";
-    } else img.src = `${data.image}`;
-    category.innerHTML = `${essen.capitalize(arr[2])}/${essen.capitalize(
-      arr[1]
-    )}/${essen.capitalize(arr[0])}`;
-    name.innerHTML = essen.capitalize(data.name);
-
-    container.appendChild(img);
-    container.appendChild(hr);
-    container.appendChild(category);
-    container.appendChild(name);
-  }
-
-  const productDataW = (() => {
-    let product_data;
-    function showProduct(arr, data) {
-      product_data = document.querySelector(".product_data");
-      product_data.innerHTML = "";
-
-      let composition = null;
-      let minerals = null;
-
-      if (data.composition != null) composition = [data.composition.join(", ")];
-      if (data.minerals != null) minerals = [data.minerals.join(", ")];
-
-      createTitle(data);
-      createImage(data.image);
-      createCategory(arr);
-      createPoints("para0", data.para);
-      createPoints("indications", data.indications);
-      createPoints("composition", composition);
-      createPoints("minerals", minerals);
-      createPoints("application", data.application);
-      createPoints("dosage", data.dosage);
-      createPoints("precautions", data.precautions);
-      createPoints("usage", data.usage);
-      createPoints("key_benifits", data.key_benifits);
-      createPoints("storage", data.storage);
-      createPoints("packaging", data.packaging);
+    async function getProductsData(string) {
+      return await serverW.getTable(string).then((data) => data);
     }
 
-    function createTitle(data) {
-      const title = document.createElement("h2");
-      const s = essen.capitalize(data.name);
+    function sortData(table_name, term, data) {
+      const regex = new RegExp(term, "i");
+      const result = [];
 
-      const middle = s.length / 2;
-      const result = `${s.substr(0, middle)}<span>${s.substr(middle)}`;
-      title.innerHTML = result;
-
-      product_data.appendChild(title);
-    }
-
-    function createImage(url) {
-      if (url != null && url.length > 50) {
-        const img = document.createElement("div");
-        img.classList.add("image");
-        img.innerHTML = `<img src=${url} />`;
-        product_data.appendChild(img);
-      }
-    }
-
-    function createCategory(arr) {
-      const span = document.createElement("span");
-      span.classList.add("category");
-
-      span.innerHTML = `${essen.capitalize(arr[2])}/${essen.capitalize(
-        arr[0]
-      )}/${essen.capitalize(arr[1])}`;
-
-      product_data.appendChild(span);
-    }
-
-    function createPoints(title, list) {
-      const points = document.createElement("div");
-
-      if (title[title.length - 1] != 0 && list != null) {
-        const h3 = document.createElement("h3");
-        h3.innerHTML = essen.capitalize(title);
-        points.appendChild(h3);
-      }
-
-      if (list != null) {
-        list.forEach((e) => {
-          let p;
-          if (title == "para0") p = document.createElement("p");
-          else p = document.createElement("span");
-          p.innerHTML = e;
-          points.appendChild(p);
+      if (regex.test(table_name.replaceAll("_", " "))) {
+        data.forEach((e) => result.push(e));
+      } else {
+        data.forEach((e) => {
+          for (const [key, value] of Object.entries(e)) {
+            if (value != null) {
+              if (typeof value == "string") {
+                if (regex.test(value.replaceAll("_", " "))) {
+                  result.push(e);
+                  break;
+                }
+              } else {
+                value.forEach((s) => {
+                  if (
+                    regex.test(s.replaceAll("_", " ")) &&
+                    result.length != 0 &&
+                    result[result.length - 1].name != e.name
+                  ) {
+                    result.push(e);
+                  }
+                });
+              }
+            }
+          }
         });
       }
 
-      if (points.innerHTML != "") product_data.appendChild(points);
+      if (term == "") return [];
+      else return result;
+    }
+
+    function addResults(data) {
+      const container = document.querySelector(
+        ".products .search .result_list"
+      );
+      container.innerHTML = "";
+
+      data.forEach((table, i) => {
+        table.forEach((e) => {
+          let subtext;
+          if (i == 0)
+            subtext = "Prawn Products" + `/${essen.capitalize(e.category)}`;
+          else
+            subtext = "Poultry Products" + `/${essen.capitalize(e.category)}`;
+
+          const item = document.createElement("div");
+          item.classList.add("item");
+
+          item.innerHTML = `<span>${essen.capitalize(
+            e.name
+          )}</span><span class="subtext">${subtext}</span>`;
+
+          item.addEventListener("click", () => {
+            productsW.showProduct(e);
+          });
+          container.appendChild(item);
+        });
+      });
+    }
+
+    function searchActivity(input) {
+      const broom = document.querySelector("i.fa-broom");
+      const results = document.querySelector(".products .search .result_list");
+
+      broom.addEventListener("click", () => {
+        input.value = "";
+        results.innerHTML = "";
+        input.focus();
+      });
+    }
+
+    return { searchInput };
+  })();
+
+  searchW.searchInput();
+
+  const productsW = (() => {
+    function addProducts(table_name, category) {
+      const container = document.querySelector(".products .products_list");
+      container.innerHTML = "";
+      serverW.getProducts(table_name, category).then((data) => {
+        data.forEach((e) => {
+          const product = document.createElement("div");
+          product.classList.add("product");
+          product.innerHTML = `<span>${essen.capitalize(
+            e.name
+          )}</span><span class="category">${essen.capitalize(
+            table_name
+          )}/${essen.capitalize(e.category)}</span>`;
+          product.addEventListener("click", () => {
+            showProduct(e);
+          });
+          container.appendChild(product);
+        });
+      });
+    }
+
+    function addCategories(table_name) {
+      const container = document.querySelector(".products .categories");
+      container.innerHTML = "";
+
+      serverW.getCategories(table_name).then((data) => {
+        const categories = sortCategories(data);
+        categories.forEach((e) => {
+          const span = document.createElement("span");
+          span.innerHTML = essen.capitalize(e);
+          container.appendChild(span);
+          span.addEventListener("click", () => {
+            container.childNodes.forEach((e) => e.classList.remove("active"));
+            span.classList.add("active");
+            addProducts(table_name, e);
+          });
+        });
+        container.childNodes[0].click();
+      });
+    }
+
+    function sortCategories(data) {
+      const arr = [];
+
+      data.forEach((e) => {
+        if (!arr.includes(e.category) || arr.length == 0) arr.push(e.category);
+      });
+
+      return arr;
+    }
+
+    function showMenu() {
+      const btns = document.querySelectorAll(".products .table_names h2");
+
+      btns.forEach((h2) => {
+        h2.addEventListener("click", () => {
+          btns.forEach((e) => e.classList.remove("active"));
+          h2.classList.add("active");
+          addCategories(essen.deCapitalize(h2.innerHTML));
+        });
+      });
+      btns[0].click();
+    }
+    showMenu();
+
+    function showProduct(data) {
+      const body = document.querySelector("body");
+      const container = document.querySelector(".products .product_data");
+      const image_container = document.querySelector(
+        ".products .product_data .image"
+      );
+      const content_container = document.querySelector(
+        ".products .product_data .content"
+      );
+      image_container.innerHTML = "";
+      content_container.innerHTML = "";
+      container.classList.add("active");
+      body.style.height = "100vh";
+      body.style.overflow = "hidden";
+
+      const h2 = document.createElement("h2");
+      h2.innerHTML = essen.capitalize(data.name);
+      content_container.appendChild(h2);
+
+      const img = document.createElement("img");
+      if (data.image != null && data.image.length > 50) img.src = data.image;
+      else img.src = "./images/logo/logo.svg";
+      image_container.appendChild(img);
+
+      for (const [key, value] of Object.entries(data)) {
+        if (
+          value != null &&
+          value != "" &&
+          key != "name" &&
+          key != "category" &&
+          key != "image"
+        ) {
+          if (key == "para") createList("", value);
+          else createList(key, value);
+        }
+      }
+
+      function createList(name, arr) {
+        const h3 = document.createElement("h3");
+        if (name != "") {
+          h3.innerHTML = essen.capitalize(name);
+          content_container.appendChild(h3);
+        }
+
+        arr.forEach((s) => {
+          const p = document.createElement("p");
+          p.innerHTML = s;
+          content_container.appendChild(p);
+        });
+      }
+
+      container.addEventListener("click", (e) => {
+        if (
+          e.target.classList.contains("product_data") ||
+          e.target.classList.contains("fa-xmark")
+        ) {
+          container.classList.remove("active");
+          body.style.height = "fit-content";
+          body.style.overflow = "visible";
+        }
+      });
     }
 
     return { showProduct };
   })();
-
-  function halfRed(s) {}
 }
 
 export default productW;

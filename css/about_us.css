@@ -125,6 +125,29 @@
   margin-right: 10px;
 }
 
+/* paragraphs with titles */
+
+.paragraph {
+  width: 1250px;
+}
+
+.paragraph h1 {
+  font-size: 44px;
+  color: #002f47;
+  margin: 0;
+  margin-top: 85px;
+  margin-bottom: 35px;
+}
+
+.paragraph h1:last-of-type {
+  text-align: center;
+}
+
+.paragraph p {
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 30px;
+}
+
 /* manufacturing process */
 
 .process {
@@ -145,6 +168,8 @@
   width: 750px;
   font-size: 44px;
   margin: 10px 0;
+  line-height: 60px;
+  margin-bottom: 5px;
 }
 
 .process > span {
@@ -283,6 +308,15 @@
     padding-top: 0;
   }
 
+  .paragraph {
+    width: 100%;
+    padding: 0 50px;
+  }
+
+  .paragraph h1 {
+    font-size: 36px;
+  }
+
   .process h1 {
     font-size: 36px;
   }
@@ -332,6 +366,10 @@
 
   .certificate img {
     width: 350px;
+  }
+
+  .paragraph {
+    padding: 0 25px;
   }
 
   .cert_chars {
@@ -415,6 +453,11 @@
     width: 100%;
     gap: 15px;
     margin-top: 25px;
+  }
+
+  .process .step {
+    height: fit-content;
+    padding: 25px;
   }
 
   .process .step:last-of-type {

@@ -255,6 +255,55 @@ const serverW = (() => {
       });
   }
 
+  function deleteTable(table_name) {
+    const requestData = {
+      tableName: table_name,
+    };
+
+    return fetch(`${server_url}/delete_table`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        throw error; // Re-throw the error to be caught by the caller
+      });
+  }
+
+  function getProducts(table_name, category) {
+    const requestData = {
+      tableName: table_name,
+      category: category,
+    };
+
+    return fetch(`${server_url}/get_products`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        throw error; // Re-throw the error to be caught by the caller
+      });
+  }
+
   return {
     getTable,
     truncateTable,
@@ -266,6 +315,7 @@ const serverW = (() => {
     uploadImage,
     getCategories,
     updateProperty,
+    getProducts,
   };
 })();
 
