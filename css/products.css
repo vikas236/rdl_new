@@ -368,7 +368,7 @@
     width: 100%;
     height: 900px;
     margin: 0;
-    margin-top: 100px;
+    margin-top: 50px;
     padding: 0 50px;
     padding-bottom: 500px;
   }
@@ -582,6 +582,7 @@
   .products_grid {
     padding: 0 25px;
     padding-bottom: 1350px;
+    margin-top: 25px;
   }
 
   .products_grid .table_names {
