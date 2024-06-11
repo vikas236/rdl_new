@@ -88,7 +88,7 @@
 }
 
 .home .intro .scientist {
-  width: 750px;
+  width: 575px;
   height: fit-content;
   position: absolute;
   bottom: -10px;
@@ -740,7 +740,7 @@
   }
 
   .home .intro .scientist {
-    width: 600px;
+    width: 500px;
     right: 50px;
   }
 
@@ -936,7 +936,7 @@
   }
 
   .home .intro .scientist {
-    width: 400px;
+    width: 350px;
     right: 0px;
     bottom: -250px;
   }
@@ -1094,11 +1094,11 @@
   }
 
   .need h2 {
-    width: 85%;
+    width: fit-content;
     font-size: 24px;
     color: #ff5959;
     z-index: 3;
-    top: 25px;
+    top: -65px;
     left: 0;
     color: white;
   }
@@ -1236,6 +1236,8 @@
 }
 
 @media only screen and (max-width: 500px) {
+  .home 
+
   .home .intro .scientist {
     width: 350px;
   }
