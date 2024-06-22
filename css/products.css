@@ -22,7 +22,7 @@
   filter: blur(2px);
   -webkit-filter: blur(2px);
   object-fit: cover;
-  opacity: 0.1;
+  opacity: 0.2;
 }
 
 .products_intro .content {
@@ -107,6 +107,12 @@
   scrollbar-width: 15px;
 }
 
+.products_intro .result_list.active {
+  width: 50px;
+  background: white;
+  border: none;
+}
+
 .products_intro .result_list .item {
   width: 415px;
   height: fit-content;
@@ -141,6 +147,12 @@
   color: #ff5959;
 }
 
+.products_intro .result_list .loader {
+  position: absolute;
+  opacity: 0.2;
+  top: 0px;
+}
+
 /* products grid */
 
 .products_grid {
@@ -150,6 +162,10 @@
   border-radius: 10px;
   margin-left: 65px;
   padding-bottom: 500px;
+}
+
+.products_grid .loader {
+  opacity: 0.14;
 }
 
 .products_grid .table_names {

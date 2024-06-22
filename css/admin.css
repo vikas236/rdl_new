@@ -1,9 +1,17 @@
 .admin {
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
-  padding: 25px;
   position: relative;
+  top: 0;
+  overflow: hidden;
+}
+
+.admin > .wrapper {
+  width: 100vw;
+  height: 200vh;
+  position: absolute;
+  transition: 0.3s;
+  top: -100vh;
 }
 
 .search_bar {
@@ -45,8 +53,7 @@
 
 .search_results {
   width: 100%;
-  min-height: fit-content;
-  max-height: 537px;
+  height: 537px;
   position: absolute;
   top: -10px;
   background: transparent;
@@ -57,6 +64,22 @@
   position: relative;
   z-index: 3;
   background: white;
+}
+
+.search_results .loader {
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-15%, -10%);
+}
+
+.search_results .loader:before,
+.search_results .loader:after {
+  width: 50px;
+  height: 50px;
+  background: black;
 }
 
 .search_results.active {
@@ -110,15 +133,15 @@
 /* editor */
 
 .editor {
-  width: 100%;
-  height: 100%;
   border-radius: 10px;
-  padding: 10px;
+  padding: 35px;
 }
 
 /* product editor */
 
 .product_editor {
+  width: 100vw;
+  height: 100vh;
   padding-bottom: 150px;
   position: relative;
 }
@@ -233,16 +256,34 @@
   width: 100%;
   height: 75px;
   bottom: 0px;
+  left: 0;
   position: absolute;
-  padding: 0 22px;
+  padding: 0px 35px;
   display: flex;
   justify-content: end;
   align-items: center;
 }
 
+.product_editor .send_data.inactive {
+  background: white;
+}
+
+.product_editor .send_data .loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -45%);
+}
+
+.product_editor .send_data.loader:before,
+.product_editor .send_data.loader:after {
+  width: 13px;
+  height: 13px;
+}
+
 .product_editor .send_data span {
-  width: fit-content;
-  height: fit-content;
+  width: 135px;
+  height: 50px;
   background: #ff5959;
   border-radius: 10px;
   padding: 10px 50px;
@@ -259,6 +300,7 @@
 }
 
 .product_editor .send_data .close_btn {
+  width: fit-content;
   background: rgba(0, 0, 0, 0.4);
   margin-right: 10px;
 }
@@ -266,6 +308,8 @@
 .product_editor .send_data .close_btn:hover {
   background: rgba(0, 0, 0, 0.6);
 }
+
+/* admin login */
 
 .admin_login {
   width: 100vw;
@@ -319,6 +363,7 @@
   position: fixed;
   top: -100px;
   left: 50%;
+  transform: translateX(-50%);
   transition: 0.5s;
   z-index: 20;
   font-weight: 400;
@@ -333,4 +378,243 @@
 
 .message.active {
   top: 30px;
+}
+
+/* side bar */
+
+.sidebar {
+  width: 125px;
+  height: fit-content;
+  position: fixed;
+  right: -100px;
+  top: 25%;
+  z-index: 5;
+  transition: 0.3s;
+}
+
+.sidebar:hover {
+  right: -25px;
+}
+
+.sidebar .wrapper {
+  width: fit-content;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #ff5959;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.sidebar i {
+  width: 55px;
+  height: 55px;
+  font-size: 32px;
+  color: white;
+  background: #ff5959;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.sidebar i:last-of-type {
+  padding: 10px 11px;
+  margin-top: 10px;
+}
+
+.sidebar i.active,
+.sidebar i:hover {
+  background: white;
+  color: #ff5959;
+}
+
+/* sellers editor */
+
+.sellers_editor {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.sellers_editor .wrapper {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.sellers_editor h1 {
+  width: fit-content;
+  font-size: 28px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.sellers_editor .sellers {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.sellers_editor .seller {
+  width: 250px;
+  height: 50px;
+  position: relative;
+}
+
+.sellers_editor .seller input {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  padding: 10px 15px;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.sellers_editor .seller input:focus {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.sellers_editor .suggestions {
+  width: 250px;
+  height: 150px;
+  list-style: none;
+  padding: 0;
+  position: absolute;
+  top: 40px;
+}
+
+.sellers_editor .suggestions .loader {
+  position: absolute;
+  top: -53px;
+  right: 0px;
+}
+
+.suggestions .loader:before,
+.suggestions .loader:after {
+  width: 13px;
+  height: 13px;
+}
+
+.sellers_editor li {
+  font-size: 18px;
+  padding: 5px 20px;
+  margin-bottom: 5px;
+  background: rgba(0, 0, 0, 0.05);
+  color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.sellers_editor li:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.sellers_editor .top {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -150px;
+  margin-bottom: 100px;
+  position: relative;
+}
+
+.update_sellers {
+  width: 175px;
+  height: 45px;
+  position: absolute;
+  right: calc(125px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  outline: none;
+  background: #ff5959;
+  color: white;
+  font-size: 24px;
+  border-radius: 10px;
+  padding: 0px 25px;
+  transition: 0.3s;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 15px;
+}
+
+.update_sellers:hover {
+  background: #ff928b;
+}
+
+.update_sellers.active {
+  box-shadow: none;
+}
+
+.update_sellers .loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -45%);
+}
+
+.update_sellers.inactive {
+  background: white;
+}
+
+.update_sellers .loader:before,
+.update_sellers .loader:after {
+  width: 13px;
+  height: 13px;
+}
+
+/* loading animation */
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  padding: 10px;
+  box-sizing: border-box;
+  display: grid;
+  background: #fff;
+  filter: blur(3px) contrast(10) hue-rotate(300deg);
+  mix-blend-mode: darken;
+  opacity: 0.5;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  grid-area: 1/1;
+  width: 15px;
+  height: 15px;
+  background: black;
+  animation: l7 2s infinite;
+}
+.loader:after {
+  animation-delay: -1s;
+}
+@keyframes l7 {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(100%, 0);
+  }
+  50% {
+    transform: translate(100%, 100%);
+  }
+  75% {
+    transform: translate(0, 100%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }

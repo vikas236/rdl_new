@@ -1,5 +1,5 @@
 const server_url = "https://rdl-server-new.vercel.app";
-const dev_url = "http://localhost:3000";
+// const server_url = "http://localhost:3000";
 
 const serverW = (() => {
   function getTable(table_name) {
@@ -304,8 +304,59 @@ const serverW = (() => {
       });
   }
 
+  function updateSellers(id, names) {
+    const requestData = {
+      id: id,
+      names: names,
+    };
+
+    return fetch(`${server_url}/update_sellers`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        throw error; // Re-throw the error to be caught by the caller
+      });
+  }
+
+  function findProduct(table_name, name) {
+    const requestData = {
+      tableName: table_name,
+      productName: name,
+    };
+
+    return fetch(`${server_url}/find_product`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        throw error; // Re-throw the error to be caught by the caller
+      });
+  }
+
   return {
     getTable,
+    updateSellers,
     truncateTable,
     getColumn,
     getProperty,
@@ -316,6 +367,7 @@ const serverW = (() => {
     getCategories,
     updateProperty,
     getProducts,
+    findProduct,
   };
 })();
 

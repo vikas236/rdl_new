@@ -3,12 +3,17 @@ import essen from "./essentials.js";
 
 function productW() {
   const searchW = (() => {
+    const container = document.querySelector(".products .search .result_list");
+
     function searchInput() {
       const input = document.querySelector(".products .search input");
+
       input.focus();
       searchActivity(input);
 
       input.addEventListener("input", async () => {
+        container.classList.add("active");
+        container.innerHTML = `<div class="loader"></div>`;
         const term = input.value.trim().toLowerCase();
         let prawn_filtered,
           poultry_filtered = [];
@@ -66,10 +71,8 @@ function productW() {
     }
 
     function addResults(data) {
-      const container = document.querySelector(
-        ".products .search .result_list"
-      );
       container.innerHTML = "";
+      container.classList.remove("active");
 
       data.forEach((table, i) => {
         table.forEach((e) => {
@@ -111,10 +114,10 @@ function productW() {
   searchW.searchInput();
 
   const productsW = (() => {
+    const container = document.querySelector(".products .products_list");
     function addProducts(table_name, category) {
-      const container = document.querySelector(".products .products_list");
-      container.innerHTML = "";
       serverW.getProducts(table_name, category).then((data) => {
+        container.innerHTML = "";
         data.forEach((e) => {
           const product = document.createElement("div");
           product.classList.add("product");
@@ -132,22 +135,23 @@ function productW() {
     }
 
     function addCategories(table_name) {
-      const container = document.querySelector(".products .categories");
-      container.innerHTML = "";
+      const container0 = document.querySelector(".products .categories");
+      container0.innerHTML = "";
 
       serverW.getCategories(table_name).then((data) => {
         const categories = sortCategories(data);
         categories.forEach((e) => {
           const span = document.createElement("span");
           span.innerHTML = essen.capitalize(e);
-          container.appendChild(span);
+          container0.appendChild(span);
           span.addEventListener("click", () => {
-            container.childNodes.forEach((e) => e.classList.remove("active"));
+            container.innerHTML = `<div class="loader"></div>`;
+            container0.childNodes.forEach((e) => e.classList.remove("active"));
             span.classList.add("active");
             addProducts(table_name, e);
           });
         });
-        container.childNodes[0].click();
+        container0.childNodes[0].click();
       });
     }
 
@@ -169,6 +173,7 @@ function productW() {
           btns.forEach((e) => e.classList.remove("active"));
           h2.classList.add("active");
           addCategories(essen.deCapitalize(h2.innerHTML));
+          container.innerHTML = `<div class="loader"></div>`;
         });
       });
       btns[0].click();

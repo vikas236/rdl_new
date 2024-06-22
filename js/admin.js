@@ -1,8 +1,6 @@
 import serverW from "./server.js";
 import essen from "./essentials.js";
 
-const clickEvent = essen.createClickEvent();
-
 async function adminW() {
   const nav = document.querySelector("nav");
   const footer = document.querySelector("footer");
@@ -12,6 +10,34 @@ async function adminW() {
   queries.style.display = "none";
   productEditor.searchW.searchInput();
   adminLogin();
+  bestSellers();
+  sideBar();
+}
+
+function sideBar() {
+  const admin = document.querySelector(".admin .wrapper");
+  const links = document.querySelector(".admin .sidebar .wrapper").childNodes;
+
+  links.forEach((e, i) => {
+    if (i == 1 || i == 3)
+      e.addEventListener("click", () => {
+        links[1].classList.remove("active");
+        links[3].classList.remove("active");
+
+        e.classList.add("active");
+        if (i == 1) adjustSection(0);
+        else adjustSection(1);
+      });
+  });
+
+  document
+    .querySelectorAll(".admin .sidebar i")[0]
+    .dispatchEvent(new Event("click"));
+
+  function adjustSection(n) {
+    if (n == 0) admin.style.top = "0";
+    if (n == 1) admin.style.top = "-100vh";
+  }
 }
 
 function adminLogin() {
@@ -26,6 +52,7 @@ function adminLogin() {
       login.style.display = "none";
     } else essen.popupMessage("login unsuccessfull");
   });
+  login.style.display = "none";
 }
 
 const productEditor = (() => {
@@ -50,6 +77,9 @@ const productEditor = (() => {
     }
 
     async function initSearch() {
+      results.classList.add("active");
+      results.innerHTML = `<div class="loader"></div>`;
+
       await getProductNames(["prawn_products", "poultry_products"]).then(
         (data) => {
           const product_names = sortResults(data);
@@ -64,7 +94,6 @@ const productEditor = (() => {
       if (product_names.length == 0) results.classList.remove("active");
       else {
         product_names.forEach(cretateListItem);
-        results.classList.add("active");
       }
     }
 
@@ -346,6 +375,8 @@ const productEditor = (() => {
 
     function updateProperty(save_btn) {
       save_btn.addEventListener("click", (e) => {
+        save_btn.innerHTML = `<div class="loader"></div>`;
+        save_btn.classList.add("inactive");
         if (save_btn.classList.contains("inactive")) {
           essen.popupMessage("please wait...");
         } else {
@@ -373,6 +404,7 @@ const productEditor = (() => {
               value
             )
             .then(async (data) => {
+              save_btn.innerHTML = "save";
               save_btn.classList.remove("inactive");
               essen.popupMessage("update successful");
             });
@@ -385,6 +417,104 @@ const productEditor = (() => {
 
   return { searchW };
 })();
+
+function bestSellers() {
+  const input = document.querySelectorAll(".admin .seller input");
+  input[0].focus();
+
+  input.forEach((e) => {
+    e.addEventListener("input", async () => {
+      e.parentElement.childNodes[3].innerHTML = `<div class="loader"></div>`;
+      const results = await getProductNames([
+        "prawn_products",
+        "poultry_products",
+      ]);
+      const suggestions = sortSuggestions(e.value, results);
+      createSuggestionsList(e, suggestions);
+    });
+  });
+
+  function addSellers() {
+    serverW.getTable("bestsellers").then((data) => {
+      // console.log(data);
+      input.forEach((e, i) => {
+        e.value = data[0].names[i];
+      });
+    });
+  }
+  addSellers();
+
+  async function getProductNames(tables) {
+    const product_names = [[], []];
+    const categories = [[], []];
+
+    for (let i = 0; i < tables.length; i++) {
+      await serverW.getColumn(tables[i], ["name", "category"]).then((data) => {
+        data.forEach((e) => {
+          product_names[i].push(e.name);
+          categories[i].push(e.category);
+        });
+      });
+    }
+
+    return [product_names, categories];
+  }
+
+  function sortSuggestions(str, arr) {
+    const result = [];
+    const regex = new RegExp(str, "i");
+
+    arr[0].forEach((e) => {
+      e.forEach((name) => {
+        if (regex.test(name)) result.push(essen.capitalize(name));
+      });
+    });
+
+    return result.slice(0, 4);
+  }
+
+  function createSuggestionsList(parent, list) {
+    const ul = parent.parentElement.childNodes[3];
+    ul.innerHTML = "";
+
+    list.forEach((e) => {
+      const li = document.createElement("li");
+      li.innerHTML = e;
+      selectSeller(li);
+      ul.appendChild(li);
+    });
+  }
+
+  function selectSeller(li) {
+    li.addEventListener("click", () => {
+      const input = li.parentElement.parentElement.childNodes[1];
+
+      input.value = li.innerHTML;
+      li.parentElement.innerHTML = "";
+    });
+  }
+
+  function updateSellers() {
+    const button = document.querySelector(".update_sellers");
+
+    button.addEventListener("click", async () => {
+      button.innerHTML = `<div class="loader"></div>`;
+      button.classList.add("inactive");
+      const arr = [];
+      input.forEach((e) => {
+        arr.push(e.value);
+      });
+
+      if (button.classList.contains("inactive"))
+        await serverW.updateSellers("1", arr).then(() => {
+          button.innerHTML = `Update`;
+          button.classList.remove("inactive");
+          essen.popupMessage("update successfull");
+        });
+    });
+  }
+  updateSellers();
+}
 
 function imageToBase64(file) {
   return new Promise((resolve, reject) => {

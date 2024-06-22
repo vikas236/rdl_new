@@ -1,33 +1,69 @@
 <div class="admin">
-  <div class="product_editor editor">
-    <div class="search_bar">
-      <input
-        type="text"
-        class=""
-        placeholder="Enter a keyword to search for a product"
-      /><i class="fa-solid fa-magnifying-glass"></i>
-      <ul class="search_results"></ul>
-    </div>
-    <div class="product_editor_data">
-      <div class="bg_image">
-        <img src="../images/background_nobg.png" />
-        <span>PRODUCT DETAILS HERE</span>
+  <div class="wrapper">
+    <div class="sidebar">
+      <div class="wrapper">
+        <i class="fa-solid fa-box"></i>
+        <i class="fa-solid fa-thumbs-up"></i>
       </div>
     </div>
-  </div>
 
-  <div class="admin_login">
-    <div class="login_creds">
-      <label for="username">username</label>
-      <input type="text" class="username" id="username" />
-      <label for="password">password</label>
-      <input type="password" class="password" id="password" />
-
-      <button>Login</button>
+    <div class="product_editor editor">
+      <div class="search_bar">
+        <input
+          type="text"
+          class=""
+          placeholder="Enter a keyword to search for a product"
+        /><i class="fa-solid fa-magnifying-glass"></i>
+        <ul class="search_results"></ul>
+      </div>
+      <div class="product_editor_data">
+        <div class="bg_image">
+          <img src="../images/background_nobg.png" />
+          <span>PRODUCT DETAILS HERE</span>
+        </div>
+      </div>
     </div>
+
+    <div class="sellers_editor">
+      <div class="wrapper">
+        <div class="top">
+          <h1>BEST SELLERS</h1>
+          <button class="update_sellers">update</button>
+        </div>
+        <div class="sellers">
+          <div class="seller">
+            <input type="text" placeholder="seller name" />
+            <ul class="suggestions"></ul>
+          </div>
+          <div class="seller">
+            <input type="text" placeholder="seller name" />
+            <ul class="suggestions"></ul>
+          </div>
+          <div class="seller">
+            <input type="text" placeholder="seller name" />
+            <ul class="suggestions"></ul>
+          </div>
+          <div class="seller">
+            <input type="text" placeholder="seller name" />
+            <ul class="suggestions"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin_login">
+      <div class="login_creds">
+        <label for="username">username</label>
+        <input type="text" class="username" id="username" />
+        <label for="password">password</label>
+        <input type="password" class="password" id="password" />
+
+        <button>Login</button>
+      </div>
+    </div>
+
+    <h1 class="message"></h1>
+
+    <div class="confirmation_modal"></div>
   </div>
-
-  <h1 class="message"></h1>
-
-  <div class="confirmation_modal"></div>
 </div>

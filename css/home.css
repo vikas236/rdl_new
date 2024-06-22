@@ -2,6 +2,9 @@
   width: 100vw;
   min-height: 1000px;
   max-height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .home .intro {
@@ -177,7 +180,71 @@
   padding: 8px 20px;
   border-radius: 5px;
   background: #ff5959;
+  transition: 0.3s;
+}
+
+.home .contact_info .right button:hover {
+  background: #69ddf8;
+  cursor: pointer;
+}
+
+.home .contact_info .right button a {
+  text-decoration: none;
   color: white;
+}
+
+/* best sellers */
+
+.best_selling {
+  width: 1350px;
+  height: 350px;
+  margin-top: 125px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  position: relative;
+}
+
+.best_selling span {
+  position: absolute;
+  top: -35px;
+  color: #ff5959;
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.best_selling .seller {
+  width: 315px;
+  height: 335px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  position: relative;
+  border-radius: 10px;
+}
+
+.best_selling .loader {
+  width: 65px;
+  height: 65px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.07;
+}
+
+.best_selling .loader::before,
+.best_selling .loader::after {
+  width: 25px;
+  height: 25px;
+}
+
+.best_selling .seller img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.best_selling .seller img.inactive {
+  object-fit: contain;
 }
 
 /* who we are */
@@ -198,7 +265,7 @@
 }
 
 .identify .content {
-  width: 800px;
+  width: 925px;
   height: 650px;
   display: flex;
   flex-direction: column;
@@ -249,7 +316,7 @@
 }
 
 .machinery .content {
-  width: 500px;
+  width: 650px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -326,7 +393,7 @@
 }
 
 .need .content {
-  width: 900px;
+  width: 1025px;
 }
 
 .need h2 {
@@ -536,7 +603,7 @@
 }
 
 .precautious .content {
-  width: 800px;
+  width: 100%;
 }
 
 .precautious h2 {
@@ -557,6 +624,7 @@
   object-fit: contain;
   position: relative;
   right: -25px;
+  display: none;
 }
 
 /* service route map */
@@ -775,6 +843,24 @@
     margin-top: 3px;
   }
 
+  /* best sellers */
+
+  .best_selling {
+    width: 100%;
+    height: 750px;
+    justify-content: center;
+  }
+
+  .best_selling span {
+    left: 45px;
+  }
+
+  .best_selling .seller {
+    width: 45vw;
+  }
+
+  /* identity  */
+
   .identify {
     padding: 0 50px;
     padding-top: 50px;
@@ -917,13 +1003,14 @@
   }
 
   .home .intro h1 {
-    font-size: 44px;
+    font-size: 40px;
     width: 100%;
     position: relative;
     z-index: 2;
     margin: 0;
-    line-height: 65px;
+    line-height: normal;
     margin-bottom: 10px;
+    padding-right: 75px;
   }
 
   .home .intro .content {
@@ -1009,6 +1096,21 @@
   .home .contact_info .right h1 {
     margin: 0;
   }
+
+  /* best selling */
+
+  .best_selling {
+    height: fit-content;
+  }
+
+  .best_selling .seller {
+    height: 275px;
+  }
+  .best_selling span {
+    left: 25px;
+  }
+
+  /* identity */
 
   .identify {
     padding: 0 50px;
@@ -1236,10 +1338,17 @@
 }
 
 @media only screen and (max-width: 500px) {
-  .home 
+  .home .intro .content {
+    padding: 35px;
+  }
+
+  .home .intro h1 {
+    font-size: 34px;
+    padding-right: 0;
+  }
 
   .home .intro .scientist {
-    width: 350px;
+    width: 275px;
   }
 
   .home .intro a {
@@ -1267,6 +1376,24 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     padding-bottom: 25px;
   }
+
+  /* best selling */
+
+  .best_selling {
+    margin-top: 150px;
+    padding: 0 25px;
+  }
+
+  .best_selling .seller {
+    width: 100%;
+    height: 200px;
+  }
+  .best_selling span {
+    left: 25px;
+    font-size: 18px;
+  }
+
+  /* identity */
 
   .identify {
     margin-top: 50px;
