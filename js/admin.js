@@ -52,7 +52,6 @@ function adminLogin() {
       login.style.display = "none";
     } else essen.popupMessage("login unsuccessfull");
   });
-  login.style.display = "none";
 }
 
 const productEditor = (() => {
