@@ -270,7 +270,6 @@
   justify-content: center;
   align-items: center;
   padding: 65px 0;
-  background: rgba(0, 0, 0, 0.07);
 }
 
 .product_data.active {
@@ -285,7 +284,7 @@
   border-radius: 15px;
   overflow: hidden;
   position: relative;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .product_data .image {
@@ -299,7 +298,7 @@
 .product_data .content {
   width: 50%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.17);
+  background: #f9f9f9;
   padding: 15px 25px;
   color: #002f47;
   overflow: scroll;
@@ -453,7 +452,6 @@
   .product_data .content {
     width: 50%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.17);
     padding: 15px 25px;
     color: #002f47;
     overflow: scroll;
