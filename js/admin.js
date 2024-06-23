@@ -373,9 +373,8 @@ const productEditor = (() => {
     }
 
     function updateProperty(save_btn) {
-      save_btn.addEventListener("click", (e) => {
+      save_btn.addEventListener("click", async (e) => {
         save_btn.innerHTML = `<div class="loader"></div>`;
-        save_btn.classList.add("inactive");
         if (save_btn.classList.contains("inactive")) {
           essen.popupMessage("please wait...");
         } else {
@@ -395,7 +394,7 @@ const productEditor = (() => {
             if (value.length < 50) value = "";
           } else value = property_value.value;
 
-          serverW
+          await serverW
             .updateProperty(
               essen.deCapitalize(index),
               essen.deCapitalize(product_name),
