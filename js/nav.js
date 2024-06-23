@@ -29,6 +29,15 @@ function navW() {
 
     console.log(wall);
   });
+
+  const contact_btn = document.querySelector("span.nav_link");
+
+  contact_btn.addEventListener("click", () => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    });
+  });
 }
 navW();
 
