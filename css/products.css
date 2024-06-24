@@ -594,6 +594,8 @@
   /* product grid */
 
   .products_grid {
+    min-height: fit-content;
+    max-height: 500px;
     padding: 0 25px;
     padding-bottom: 1350px;
     margin-top: 25px;
@@ -628,7 +630,8 @@
   }
 
   .products_grid .products_list {
-    height: 750px;
+    min-height: fit-content;
+    max-height: 750px;
     overflow: scroll;
     padding: 0;
     margin-top: 25px;
