@@ -1,5 +1,5 @@
-// const server_url = "https://rdl-server-new.vercel.app";
-const server_url = "http://localhost:3000";
+const server_url = "https://rdl-server-new.vercel.app";
+// const server_url = "http://localhost:3000";
 
 const serverW = (() => {
   function getTable(table_name) {
