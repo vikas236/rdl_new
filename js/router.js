@@ -6,6 +6,11 @@ import adminW from "./admin.js";
 
 // Function to handle routing based on hash change
 function handleHashChange() {
+  const body = document.querySelector("body");
+  body.style.opacity = 0;
+  setTimeout(() => {
+    body.style.opacity = 1;
+  }, 500);
   const path = window.location.hash.substring(1); // Remove the '#' symbol
   loadPage(path);
 }

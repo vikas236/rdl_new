@@ -324,7 +324,10 @@ const productEditor = (() => {
       } else if (name == "category")
         property_value.value = essen.capitalize(data);
       else if (name == "name") property_value.value = essen.capitalize(data);
-      else property_value.value = data;
+      else {
+        if (!typeof data != "object") property_value.value = data.join("\n");
+        else property_value.value = data;
+      }
     }
 
     function productImage(container) {
@@ -392,7 +395,7 @@ const productEditor = (() => {
           else if (property_name == "Image") {
             value = property_value.childNodes[0].src;
             if (value.length < 50) value = "";
-          } else value = property_value.value;
+          } else value = property_value.value.split("\n");
 
           await serverW
             .updateProperty(
