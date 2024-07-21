@@ -26,8 +26,6 @@ function navW() {
       body.style.height = "fit-content";
       ham.classList.remove("active");
     });
-
-    console.log(wall);
   });
 
   const contact_btn = document.querySelector("span.nav_link");

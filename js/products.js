@@ -1,6 +1,44 @@
 import serverW from "./server.js";
 import essen from "./essentials.js";
 
+const products_order = [
+  "immunostim",
+  "act_prime",
+  "revive",
+  "vibriocide",
+  "vibrinil",
+  "bacto_cube",
+  "edi-prob",
+  "rdl_min",
+  "geomin",
+  "vitazyme_c",
+  "nutrimax",
+  "armour",
+  "oxy_mask",
+  "sanoclean",
+  "bactericide",
+  "floc_6",
+  "bloomin",
+  "geo_prob",
+  "pro_ps",
+  "geoclean_pro",
+  "nitro_clear",
+  "minerstim",
+  "quick_yeast",
+  "moult_stim",
+  "livguard",
+  "bottom_guard",
+  "micro_cube",
+  "gillend",
+  "virucide",
+  "santo_blu",
+  "geoclean",
+  "de_hardner",
+  "feed_bind",
+  "proscott",
+  "rdl_snail_end",
+];
+
 function productW() {
   const searchW = (() => {
     const container = document.querySelector(".products .search .result_list");
@@ -117,8 +155,28 @@ function productW() {
     const container = document.querySelector(".products .products_list");
     function addProducts(table_name, category) {
       serverW.getProducts(table_name, category).then((data) => {
-        container.innerHTML = "";
+        const arr = [];
+        let order = [];
+        let remaining = [];
+
         data.forEach((e) => {
+          if (products_order.includes(e.name))
+            order.push(products_order.indexOf(e.name));
+          else {
+            remaining.push(e);
+          }
+        });
+
+        order.sort().reverse();
+        order.forEach((i) => {
+          data.forEach((k) => {
+            if (products_order[i] == k.name) arr.push(k);
+          });
+        });
+        remaining.forEach((e) => arr.push(e));
+
+        container.innerHTML = "";
+        arr.forEach((e) => {
           const product = document.createElement("div");
           product.classList.add("product");
           product.innerHTML = `<span>${essen.capitalize(
