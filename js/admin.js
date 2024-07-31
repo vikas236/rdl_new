@@ -8,6 +8,7 @@ async function adminW() {
   nav.style.display = "none";
   footer.style.display = "none";
   queries.style.display = "none";
+  menuEditor.menuNames();
   productEditor.searchW.searchInput();
   adminLogin();
   bestSellers();
@@ -16,27 +17,25 @@ async function adminW() {
 
 function sideBar() {
   const admin = document.querySelector(".admin .wrapper");
-  const links = document.querySelector(".admin .sidebar .wrapper").childNodes;
+  const links = document.querySelectorAll(".admin .sidebar i");
 
   links.forEach((e, i) => {
-    if (i == 1 || i == 3)
-      e.addEventListener("click", () => {
-        links[1].classList.remove("active");
-        links[3].classList.remove("active");
+    e.addEventListener("click", () => {
+      links.forEach((e) => e.classList.remove("active"));
 
-        e.classList.add("active");
-        if (i == 1) adjustSection(0);
-        else adjustSection(1);
-      });
+      e.classList.add("active");
+      adjustSection(i);
+    });
   });
 
   document
     .querySelectorAll(".admin .sidebar i")[0]
     .dispatchEvent(new Event("click"));
 
-  function adjustSection(n) {
-    if (n == 0) admin.style.top = "0";
-    if (n == 1) admin.style.top = "-100vh";
+  function adjustSection(i) {
+    const editors = document.querySelectorAll(".editor");
+    editors.forEach((e) => e.classList.remove("active"));
+    editors[i].classList.add("active");
   }
 }
 
@@ -46,13 +45,225 @@ function adminLogin() {
   const password = document.querySelector(".admin_login .password");
   const button = document.querySelector(".admin_login button");
 
+  // login.classList.remove("active");
   button.addEventListener("click", () => {
     if ((username.value == "admin", password.value == "pass62")) {
       essen.popupMessage("login successfull");
-      login.style.display = "none";
+      login.classList.remove("active");
     } else essen.popupMessage("login unsuccessfull");
   });
 }
+
+const menuEditor = (() => {
+  let product_name, category_name, table_name;
+
+  function menuNames() {
+    const names = document.querySelectorAll(".menu_editor .menu_name");
+    const categories_container = document.querySelector(".menu_categories");
+
+    setTimeout(() => {
+      names[0].click();
+    }, 0);
+    names.forEach((e) => {
+      e.addEventListener("click", () => {
+        names.forEach((e) => e.classList.remove("active"));
+        e.classList.add("active");
+        table_name = e.innerHTML;
+        categories_container.innerHTML = `
+        <div class="category_name loader"></div>
+        <div class="category_name loader"></div>
+        <div class="category_name loader"></div>
+        <div class="category_name loader"></div>`;
+        addCategories(e.innerHTML);
+      });
+    });
+  }
+
+  async function addCategories(menu_name) {
+    const result = await getCategoryNames(essen.deCapitalize(menu_name));
+    const container = document.querySelector(".admin .menu_categories");
+    container.innerHTML = "";
+
+    result.forEach((e) => {
+      const span = document.createElement("span");
+      span.classList.add("category_name");
+      span.innerHTML = e;
+      span.addEventListener("click", () => addProuctNames(menu_name, span));
+      container.appendChild(span);
+    });
+
+    container.childNodes[0].click();
+  }
+
+  async function getCategoryNames(table_name) {
+    let arr = [];
+
+    await serverW.getCategories(table_name).then((result) => {
+      result.forEach((e) => {
+        const category = essen.capitalize(e.category);
+        if (!arr.includes(category)) arr.push(category);
+      });
+    });
+
+    return arr;
+  }
+
+  async function addProuctNames(menu_name, category) {
+    const container = document.querySelector(".admin .product_names .wrapper");
+    const category_names = document.querySelectorAll(
+      ".admin .menu_categories .category_name"
+    );
+    category_names.forEach((e) => e.classList.remove("active"));
+
+    category.classList.add("active");
+    category_name = category.innerHTML;
+    container.innerHTML = `<div class="name loader"></div>`;
+
+    await serverW
+      .getProducts(
+        essen.deCapitalize(menu_name),
+        essen.deCapitalize(category.innerHTML)
+      )
+      .then((result) => {
+        container.innerHTML = "";
+
+        result.forEach((e) => {
+          const span = document.createElement("h3");
+          span.classList.add("name");
+          span.innerHTML = `<span>${essen.capitalize(
+            e.name
+          )}</span><i class="fa-solid fa-trash"></i>`;
+          span.childNodes[0].addEventListener("click", () => {
+            showProduct(menu_name, category, span.childNodes[0].innerHTML);
+          });
+          span.childNodes[1].addEventListener("click", () => {
+            deleteProduct(span);
+          });
+          container.appendChild(span);
+        });
+        addButton(container);
+      });
+  }
+
+  async function showProduct(menu_name, category_name, product_name) {
+    const links = document.querySelectorAll(".sidebar i");
+
+    await serverW.getColumnNames(essen.deCapitalize(menu_name)).then((data) => {
+      productEditor.productEditorW.redirectFromMenu(data, product_name);
+    });
+
+    productEditor.propertyEditorW.redirectFromMenu([
+      menu_name,
+      category_name,
+      product_name,
+    ]);
+
+    links[1].click();
+  }
+
+  function addButton(container) {
+    const button = document.createElement("button");
+    button.innerHTML = `<i class="fa-solid fa-plus"></i>
+    <div class="input"><input type="text" placeholder="Enter Product Name" />
+    <i class="fa-solid fa-check"></i><i class="fa-solid fa-xmark"></i></div>
+    <div class="loader0"></div>`;
+    const input = button.childNodes[2].childNodes[0];
+    container.appendChild(button);
+    const done_btn = button.childNodes[2].childNodes[2];
+    const cancel_btn = button.childNodes[2].childNodes[3];
+
+    button.childNodes[0].addEventListener("click", () => {
+      button.classList.add("active");
+      input.focus();
+
+      done_btn.addEventListener("click", () => {
+        productEditor.searchW
+          .getProductNames(["prawn_products"])
+          .then((data) => {
+            addNewProduct(button, data);
+          });
+      });
+
+      cancel_btn.addEventListener("click", () => revertAddingProduct(button));
+    });
+  }
+
+  async function addNewProduct(button, data) {
+    let isAvailable = true;
+    const name = essen.deCapitalize(button.childNodes[2].childNodes[0].value);
+    const input = button.childNodes[2].childNodes[0];
+
+    data.forEach((e) => {
+      const product_names = e[0];
+      if (product_names.includes(name)) isAvailable = false;
+    });
+
+    if (isAvailable && name) {
+      await serverW.addNewProduct(
+        name,
+        essen.deCapitalize(table_name),
+        essen.deCapitalize(category_name)
+      );
+
+      const span = document.createElement("h3");
+      span.classList.add("name");
+      span.innerHTML = `<span>${essen.capitalize(
+        name
+      )}</span><i class="fa-solid fa-trash"></i>`;
+      span.childNodes[0].addEventListener("click", () => {
+        showProduct(
+          essen.deCapitalize(table_name),
+          essen.deCapitalize(category_name),
+          name
+        );
+      });
+      span.childNodes[1].addEventListener("click", () => {
+        deleteProduct(span);
+      });
+      button.parentNode.insertBefore(span, button);
+
+      revertAddingProduct(button);
+    } else {
+      essen.popupMessage("name taken");
+    }
+  }
+
+  function revertAddingProduct(button) {
+    button.classList.remove("active");
+    const input = button.childNodes[2].childNodes[0];
+    input.innerHTML = "";
+  }
+
+  function deleteProduct(span) {
+    const dialog = document.querySelector(".delete_confirm");
+    dialog.classList.add("active");
+    const buttons = document.querySelectorAll(".delete_confirm button");
+    const title = document.querySelector(".delete_confirm h1");
+
+    title.innerHTML = `Remove ${span.childNodes[0].innerHTML}`;
+
+    buttons[0].addEventListener("click", (e) => {
+      dialog.classList.remove("active");
+    });
+
+    buttons[1].addEventListener("click", () => {
+      dialog.childNodes[1].innerHTML = `<div class="loader0"></div>`;
+      serverW
+        .removeProduct(
+          essen.deCapitalize(span.childNodes[0].innerHTML),
+          essen.deCapitalize(table_name),
+          essen.deCapitalize(category_name)
+        )
+        .then((data) => {
+          essen.popupMessage(`${span.childNodes[0].innerHTML} Removed`);
+          dialog.classList.remove("active");
+          span.remove();
+        });
+    });
+  }
+
+  return { menuNames };
+})();
 
 const productEditor = (() => {
   let data_container;
@@ -215,7 +426,15 @@ const productEditor = (() => {
       });
     }
 
-    function addData(data) {
+    function redirectFromMenu(data, name) {
+      data_container = document.querySelector(".product_editor_data");
+      data_container.innerHTML = "";
+      product_name = name;
+
+      addData(data, 1);
+    }
+
+    function addData(data, n) {
       searchW.closeSearch(essen.capitalize(product_name));
 
       const title = document.createElement("h3");
@@ -238,11 +457,12 @@ const productEditor = (() => {
       data_container.appendChild(title);
       data_container.appendChild(label);
       data_container.appendChild(select);
-      propertyEditorW.showProperty(select, [product_name, index, category]);
+      if (!n)
+        propertyEditorW.showProperty(select, [product_name, index, category]);
       propertyEditorW.addCloseButtons();
     }
 
-    return { showEditor };
+    return { showEditor, redirectFromMenu };
   })();
 
   const propertyEditorW = (() => {
@@ -252,10 +472,10 @@ const productEditor = (() => {
 
     async function showProperty(select, obj) {
       [product_name, index, category] = obj;
-      addPropertyValue(select);
+      addPropertyValue(essen.deCapitalize(select.value));
 
       select.addEventListener("input", async () => {
-        addPropertyValue(select);
+        addPropertyValue(essen.deCapitalize(select.value));
       });
     }
 
@@ -297,6 +517,21 @@ const productEditor = (() => {
       return property_value;
     }
 
+    function redirectFromMenu(arr) {
+      data_container = document.querySelector(".product_editor_data");
+
+      index = arr[0];
+      category = arr[1].innerHTML;
+      product_name = arr[2];
+      addPropertyValue(essen.deCapitalize("name"));
+
+      const select = document.querySelector("select");
+
+      select.addEventListener("input", async () => {
+        addPropertyValue(essen.deCapitalize(select.value));
+      });
+    }
+
     async function getCategoryNames(table_name) {
       let arr = [];
 
@@ -310,8 +545,7 @@ const productEditor = (() => {
       return arr;
     }
 
-    async function addPropertyValue(select) {
-      const name = essen.deCapitalize(select.value);
+    async function addPropertyValue(name) {
       let property_value = await createProperty(name);
       let result = await getPropertyValue(name);
 
@@ -320,12 +554,15 @@ const productEditor = (() => {
 
       if (name == "image") {
         property_value.childNodes[0].src = data;
+        if (data == "")
+          property_value.childNodes[0].src = "../images/logo/logo.svg";
         productImage(property_value);
       } else if (name == "category")
         property_value.value = essen.capitalize(data);
       else if (name == "name") property_value.value = essen.capitalize(data);
       else {
-        if (!typeof data != "object") property_value.value = data.join("\n");
+        if (!typeof data != "object" && data != "")
+          property_value.value = data.join("\n");
         else property_value.value = data;
       }
     }
@@ -337,8 +574,8 @@ const productEditor = (() => {
       input.addEventListener("input", async () => {
         const file = input.files[0];
         const url = await imageToBase64(file);
-
-        img.src = `data:image/png;base64,${url}`;
+        if (url) img.src = `data:image/png;base64,${url}`;
+        else img.src = "";
       });
     }
 
@@ -352,6 +589,7 @@ const productEditor = (() => {
           essen.deCapitalize(category)
         )
         .then((result) => (data = result));
+
       return data;
     }
 
@@ -413,10 +651,10 @@ const productEditor = (() => {
       });
     }
 
-    return { showProperty, addCloseButtons };
+    return { showProperty, addCloseButtons, redirectFromMenu };
   })();
 
-  return { searchW };
+  return { searchW, productEditorW, propertyEditorW };
 })();
 
 function bestSellers() {

@@ -2,81 +2,78 @@ const server_url = "https://rdl-server-new.vercel.app";
 // const server_url = "http://localhost:3000";
 
 const serverW = (() => {
-  function getTable(table_name) {
+  async function getTable(table_name) {
     const requestData = {
       tableName: table_name,
     };
 
-    return fetch(`${server_url}/get_table`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        throw error; // Re-throw the error to be caught by the caller
+    try {
+      const response = await fetch(`${server_url}/get_table`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
       });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Error:", error);
+      throw error; // Re-throw the error to be caught by the caller
+    }
   }
 
-  function truncateTable(table_name) {
+  async function truncateTable(table_name) {
     const requestData = {
       tableName: table_name,
     };
 
-    return fetch(`${server_url}/clear_table`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        throw error; // Re-throw the error to be caught by the caller
+    try {
+      const response = await fetch(`${server_url}/clear_table`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
       });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Error:", error);
+      throw error; // Re-throw the error to be caught by the caller
+    }
   }
 
-  function getColumn(table_name, col_names, condition) {
+  async function getColumn(table_name, col_names, condition) {
     const requestData = {
       tableName: table_name,
       columnNames: col_names,
     };
     if (condition) requestData.name = condition;
 
-    return fetch(`${server_url}/get_column`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        throw error; // Re-throw the error to be caught by the caller
+    try {
+      const response = await fetch(`${server_url}/get_column`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
       });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Error:", error);
+      throw error; // Re-throw the error to be caught by the caller
+    }
   }
 
-  function getProperty(table_name, col_name, product_name, category) {
+  async function getProperty(table_name, col_name, product_name, category) {
     const requestData = {
       tableName: table_name,
       columnName: col_name,
@@ -103,7 +100,7 @@ const serverW = (() => {
       });
   }
 
-  function getCategory(table_name, col_name, product_name) {
+  async function getCategory(table_name, col_name, product_name) {
     const requestData = {
       tableName: table_name,
       columnName: col_name,
@@ -129,7 +126,7 @@ const serverW = (() => {
       });
   }
 
-  function getProductData(table_name, product_name, category) {
+  async function getProductData(table_name, product_name, category) {
     const requestData = {
       tableName: table_name,
       productName: product_name,
@@ -147,6 +144,7 @@ const serverW = (() => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
+        console.log(response.json());
         return response.json();
       })
       .catch((error) => {
@@ -155,7 +153,7 @@ const serverW = (() => {
       });
   }
 
-  function getColumnNames(table_name) {
+  async function getColumnNames(table_name) {
     const requestData = {
       tableName: table_name,
     };
@@ -179,7 +177,7 @@ const serverW = (() => {
       });
   }
 
-  function uploadImage(table_name, url) {
+  async function uploadImage(table_name, url) {
     const requestData = {
       tableName: table_name,
       imageUrl: url,
@@ -204,7 +202,7 @@ const serverW = (() => {
       });
   }
 
-  function getCategories(table_name) {
+  async function getCategories(table_name) {
     const requestData = {
       tableName: table_name,
     };
@@ -228,7 +226,12 @@ const serverW = (() => {
       });
   }
 
-  function updateProperty(table_name, product_name, property_name, new_value) {
+  async function updateProperty(
+    table_name,
+    product_name,
+    property_name,
+    new_value
+  ) {
     const requestData = {
       tableName: table_name,
       columnName: property_name,
@@ -255,7 +258,7 @@ const serverW = (() => {
       });
   }
 
-  function deleteTable(table_name) {
+  async function deleteTable(table_name) {
     const requestData = {
       tableName: table_name,
     };
@@ -279,7 +282,7 @@ const serverW = (() => {
       });
   }
 
-  function getProducts(table_name, category) {
+  async function getProducts(table_name, category) {
     const requestData = {
       tableName: table_name,
       category: category,
@@ -304,7 +307,7 @@ const serverW = (() => {
       });
   }
 
-  function updateSellers(id, names) {
+  async function updateSellers(id, names) {
     const requestData = {
       id: id,
       names: names,
@@ -329,7 +332,7 @@ const serverW = (() => {
       });
   }
 
-  function findProduct(table_name, name) {
+  async function findProduct(table_name, name) {
     const requestData = {
       tableName: table_name,
       productName: name,
@@ -354,6 +357,56 @@ const serverW = (() => {
       });
   }
 
+  async function addNewProduct(product_name, table_name, category) {
+    const requestData = {
+      name: product_name,
+      table: table_name,
+      category: category,
+    };
+
+    try {
+      const response = await fetch(`${server_url}/add_product`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Error:", error);
+      throw error; // Re-throw the error to be caught by the caller
+    }
+  }
+
+  async function removeProduct(product_name, table_name, category) {
+    const requestData = {
+      name: product_name,
+      table: table_name,
+      category: category,
+    };
+
+    try {
+      const response = await fetch(`${server_url}/remove_product`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Error:", error);
+      throw error; // Re-throw the error to be caught by the caller
+    }
+  }
+
   return {
     getTable,
     updateSellers,
@@ -368,6 +421,8 @@ const serverW = (() => {
     updateProperty,
     getProducts,
     findProduct,
+    addNewProduct,
+    removeProduct,
   };
 })();
 
