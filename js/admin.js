@@ -560,6 +560,8 @@ const productEditor = (() => {
       } else if (name == "category")
         property_value.value = essen.capitalize(data);
       else if (name == "name") property_value.value = essen.capitalize(data);
+      else if (name == "tagline")
+        property_value.value = data.replaceAll("_", " ");
       else {
         if (!typeof data != "object" && data != "")
           property_value.value = data.join("\n");
@@ -628,7 +630,11 @@ const productEditor = (() => {
           );
           let value;
 
-          if (property_name == "Name" || property_name == "Category")
+          if (
+            property_name == "Name" ||
+            property_name == "Category" ||
+            property_name == "Tagline"
+          )
             value = essen.deCapitalize(property_value.value);
           else if (property_name == "Image") {
             value = property_value.childNodes[0].src;

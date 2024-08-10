@@ -177,13 +177,16 @@ function productW() {
 
         container.innerHTML = "";
         arr.forEach((e) => {
+          let image_url = e.image ? e.image : "../images/logo/logo.svg";
+          let tagline;
+          if (e.tagline) tagline = e.tagline.replaceAll("_", " ");
+          else tagline = e.category.replaceAll("_", " ");
+
           const product = document.createElement("div");
           product.classList.add("product");
-          product.innerHTML = `<span>${essen.capitalize(
+          product.innerHTML = `<div class="image"><img class="image" src=${image_url} /></div><span>${essen.capitalize(
             e.name
-          )}</span><span class="category">${essen.capitalize(
-            table_name
-          )}/${essen.capitalize(e.category)}</span>`;
+          )}</span><span class="tagline">${tagline}</span>`;
           product.addEventListener("click", () => {
             showProduct(e);
           });
@@ -268,7 +271,8 @@ function productW() {
           value != "" &&
           key != "name" &&
           key != "category" &&
-          key != "image"
+          key != "image" &&
+          key != "tagline"
         ) {
           if (key == "para") createList("", value);
           else createList(key, value);
