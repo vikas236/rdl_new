@@ -238,13 +238,14 @@
 
 .products_grid .products_list .product {
   width: 400px;
-  height: 520px;
+  height: fit-content;
   background: rgba(0, 0, 0, 0.07);
   border-radius: 5px;
   padding: 10px 15px;
   cursor: pointer;
   border: 1px solid transparent;
-  padding-bottom: 150px;
+  padding-bottom: 15px;
+  position: relative;
 }
 
 .products_grid .products_list .product:hover {
@@ -277,6 +278,7 @@
 }
 
 .products_grid .products_list span.tagline {
+  min-height: 50px;
   font-size: 16px;
   color: rgba(0, 0, 0, 0.53);
   margin-top: auto;
@@ -407,7 +409,7 @@
 
   .products_grid {
     width: 100%;
-    height: 900px;
+    min-height: 900px;
     margin: 0;
     margin-top: 50px;
     padding: 0 50px;
@@ -620,10 +622,9 @@
   /* product grid */
 
   .products_grid {
-    min-height: fit-content;
-    max-height: 500px;
+    min-height: 500px;
+    height: fit-content;
     padding: 0 25px;
-    padding-bottom: 1350px;
     margin-top: 25px;
   }
 
@@ -656,12 +657,12 @@
   }
 
   .products_grid .products_list {
-    min-height: fit-content;
-    max-height: 750px;
+    min-height: 50px;
     overflow: scroll;
     padding: 0;
     margin-top: 25px;
     border-radius: 5px;
+    padding-bottom: 250px;
   }
 
   .products_grid .products_list .product {
@@ -676,6 +677,10 @@
 @media only screen and (max-width: 432px) {
   .products_intro h1 {
     font-size: 44px;
+  }
+
+  .products_grid .products_list span.tagline {
+    min-height: 35px;
   }
 
   .product_data {
