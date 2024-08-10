@@ -238,7 +238,7 @@
 
 .products_grid .products_list .product {
   width: 400px;
-  height: 475px;
+  height: 520px;
   background: rgba(0, 0, 0, 0.07);
   border-radius: 5px;
   padding: 10px 15px;
@@ -254,7 +254,7 @@
 .products_grid .products_list .product .image {
   width: 100%;
   border-radius: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   background: white;
   overflow: hidden;
 }
@@ -271,17 +271,17 @@
 
 .products_grid .products_list span {
   display: block;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 400;
   text-align: center;
 }
 
 .products_grid .products_list span.tagline {
-  font-size: 13px;
+  font-size: 16px;
   color: rgba(0, 0, 0, 0.53);
   margin-top: auto;
   font-weight: 500;
-  padding: 0 50px;
+  padding: 0 25px;
 }
 
 .product_data {
