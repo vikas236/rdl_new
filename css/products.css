@@ -270,6 +270,14 @@
   transform: scale(1.1);
 }
 
+.products_grid .products_list .content {
+  height: 105px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .products_grid .products_list span {
   display: block;
   font-size: 22px;
@@ -281,9 +289,9 @@
   min-height: 50px;
   font-size: 16px;
   color: rgba(0, 0, 0, 0.53);
-  margin-top: auto;
   font-weight: 500;
-  padding: 0 25px;
+  padding: 0 15px;
+  box-sizing: border-box;
 }
 
 .product_data {
@@ -681,6 +689,7 @@
 
   .products_grid .products_list span.tagline {
     min-height: 35px;
+    font-size: 14px;
   }
 
   .product_data {

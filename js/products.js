@@ -184,9 +184,10 @@ function productW() {
 
           const product = document.createElement("div");
           product.classList.add("product");
-          product.innerHTML = `<div class="image"><img class="image" src=${image_url} /></div><span>${essen.capitalize(
+          product.innerHTML = `<div class="image"><img class="image" src=${image_url} /></div>
+          <div class="content"><span>${essen.capitalize(
             e.name
-          )}</span><span class="tagline">${tagline}</span>`;
+          )}</span><span class="tagline">${tagline}</span></div>`;
           product.addEventListener("click", () => {
             showProduct(e);
           });
