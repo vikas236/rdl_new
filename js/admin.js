@@ -45,7 +45,7 @@ function adminLogin() {
   const password = document.querySelector(".admin_login .password");
   const button = document.querySelector(".admin_login button");
 
-  login.classList.remove("active");
+  // login.classList.remove("active");
   button.addEventListener("click", () => {
     if ((username.value == "admin", password.value == "pass62")) {
       essen.popupMessage("login successfull");
