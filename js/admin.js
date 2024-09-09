@@ -513,8 +513,12 @@ const productEditor = (() => {
       if (name == "category") {
         property_value = document.createElement("select");
         const select = document.createElement("select");
+        const button = document.createElement("button");
+
         select.classList.add("property_value");
         const options = await getCategoryNames("prawn_products");
+        button.classList.add("category_edit");
+        button.innerHTML = `<i class="fa-solid fa-plus"></i>`;
 
         options.forEach((e) => {
           const option = document.createElement("option");
@@ -522,7 +526,12 @@ const productEditor = (() => {
           select.appendChild(option);
         });
 
+        button.addEventListener("click", () =>
+          CategoryListEdit(select, button)
+        );
+
         data_container.appendChild(select);
+        data_container.appendChild(button);
 
         return select;
       } else if (name == "image") {
@@ -540,6 +549,48 @@ const productEditor = (() => {
       }
 
       return property_value;
+    }
+
+    function CategoryListEdit(select, button) {
+      const body = document.querySelector("body");
+      const modal = document.createElement("div");
+
+      modal.classList.add("new_category");
+      modal.classList.add("modal");
+      modal.innerHTML = `<div class="wrapper"><input type="text" placeholder="Enter Category Name" />
+                        <div class="buttons"><button><i class="fa-solid fa-chevron-left">
+                        </i></button><button><i class="fa-solid fa-check"></i></button></div></div>`;
+
+      body.appendChild(modal);
+      modal.classList.add("active");
+      const input = modal.childNodes[0].childNodes[0];
+      const back_btn = modal.childNodes[0].childNodes[2].childNodes[0];
+      const done_btn = modal.childNodes[0].childNodes[2].childNodes[1];
+
+      input.focus();
+
+      back_btn.addEventListener("click", () => closeModal());
+
+      done_btn.addEventListener("click", () => {
+        if (input.value) {
+          const option = document.createElement("option");
+          option.textContent = essen.capitalize(input.value);
+          select.appendChild(option);
+          closeModal();
+
+          essen.popupMessage("New Category Added Successfully");
+          setTimeout(() => {
+            essen.popupMessage("Select New Category To Add");
+          }, 1500);
+        } else {
+          essen.popupMessage("input field is empty");
+        }
+      });
+
+      function closeModal() {
+        modal.classList.remove("active");
+        modal.innerHTML = "";
+      }
     }
 
     function redirectFromMenu(arr) {

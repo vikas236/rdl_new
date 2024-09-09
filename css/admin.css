@@ -233,7 +233,6 @@
 .product_names .wrapper {
   width: 100%;
   height: fit-content;
-  overflow: hidden;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
@@ -270,6 +269,10 @@
   padding: 10px;
   position: absolute;
   inset: 50%;
+}
+
+.product_names button {
+  overflow: hidden;
 }
 
 .menu_editor .name i {
@@ -520,6 +523,71 @@
   font-size: 16px;
   outline: none;
   cursor: pointer;
+}
+
+.product_editor_data button.category_edit {
+  height: 50px;
+  position: relative;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+/* modal to add new category */
+body .modal.new_category {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.14);
+  position: absolute;
+  inset: 0;
+  display: none;
+  z-index: 2;
+}
+
+body .modal.new_category.active {
+  display: block;
+}
+
+body .modal.new_category .wrapper {
+  width: 425px;
+  height: fit-content;
+  background: white;
+  position: absolute;
+  inset: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+  padding: 27px 25px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+body .modal.new_category input {
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 7px;
+  margin-bottom: 17px;
+}
+
+body .modal.new_category button {
+  width: 48%;
+  padding: 5px 10px;
+  background: #ff5959;
+  border: none;
+  border-radius: 5px;
+  font-size: 24px;
+  color: white;
+  border: 2px solid #ff5959;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+body .modal.new_category button:first-of-type {
+  margin-right: 15px;
+}
+
+body .modal.new_category button:hover {
+  background: white;
+  color: #ff5959;
 }
 
 .product_editor_data .property_value {
