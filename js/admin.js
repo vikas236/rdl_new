@@ -1,6 +1,25 @@
 import serverW from "./server.js";
 import essen from "./essentials.js";
 
+const data_order = [
+  "name",
+  "para",
+  "indications",
+  "composition",
+  "minerals",
+  "application",
+  "dosage",
+  "precautions",
+  "usage",
+  "key_benifits",
+  "storage",
+  "packaging",
+  "category",
+  "image",
+  "tagline",
+  "hidden",
+];
+
 async function adminW() {
   const nav = document.querySelector("nav");
   const footer = document.querySelector("footer");
@@ -435,6 +454,7 @@ const productEditor = (() => {
     }
 
     function addData(data, n) {
+      data = createOrder(data);
       searchW.closeSearch(essen.capitalize(product_name));
 
       const title = document.createElement("h3");
@@ -460,6 +480,11 @@ const productEditor = (() => {
       if (!n)
         propertyEditorW.showProperty(select, [product_name, index, category]);
       propertyEditorW.addCloseButtons();
+    }
+
+    // create order in column names of both products tables
+    function createOrder(arr) {
+      return data_order;
     }
 
     return { showEditor, redirectFromMenu };
@@ -562,7 +587,10 @@ const productEditor = (() => {
       else if (name == "name") property_value.value = essen.capitalize(data);
       else if (name == "tagline")
         property_value.value = data.replaceAll("_", " ");
-      else {
+      else if (name == "hidden") {
+        if (data) property_value.value = "yes";
+        else property_value.value = "no";
+      } else {
         if (!typeof data != "object" && data != "")
           property_value.value = data.join("\n");
         else property_value.value = data;
@@ -639,6 +667,9 @@ const productEditor = (() => {
           else if (property_name == "Image") {
             value = property_value.childNodes[0].src;
             if (value.length < 50) value = "";
+          } else if (property_name == "Hidden") {
+            if (property_value.value == "yes") value = true;
+            else value = false;
           } else value = property_value.value.split("\n");
 
           await serverW

@@ -177,21 +177,23 @@ function productW() {
 
         container.innerHTML = "";
         arr.forEach((e) => {
-          let image_url = e.image ? e.image : "../images/logo/logo.svg";
-          let tagline;
-          if (e.tagline) tagline = e.tagline.replaceAll("_", " ");
-          else tagline = e.category.replaceAll("_", " ");
+          if (!e.hidden && e.hidden != null) {
+            let image_url = e.image ? e.image : "../images/logo/logo.svg";
+            let tagline;
+            if (e.tagline) tagline = e.tagline.replaceAll("_", " ");
+            else tagline = e.category.replaceAll("_", " ");
 
-          const product = document.createElement("div");
-          product.classList.add("product");
-          product.innerHTML = `<div class="image"><img class="image" src=${image_url} /></div>
+            const product = document.createElement("div");
+            product.classList.add("product");
+            product.innerHTML = `<div class="image"><img class="image" src=${image_url} /></div>
           <div class="content"><span>${essen.capitalize(
             e.name
           )}</span><span class="tagline">${tagline}</span></div>`;
-          product.addEventListener("click", () => {
-            showProduct(e);
-          });
-          container.appendChild(product);
+            product.addEventListener("click", () => {
+              showProduct(e);
+            });
+            container.appendChild(product);
+          }
         });
       });
     }
