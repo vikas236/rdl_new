@@ -79,11 +79,17 @@ function homeW() {
           content_container.appendChild(h3);
         }
 
-        arr.forEach((s) => {
+        if (typeof arr != "string")
+          arr.forEach((s) => {
+            const p = document.createElement("p");
+            p.innerHTML = s;
+            content_container.appendChild(p);
+          });
+        else {
           const p = document.createElement("p");
-          p.innerHTML = s;
+          p.innerHTML = arr;
           content_container.appendChild(p);
-        });
+        }
       }
 
       container.addEventListener("click", (e) => {
